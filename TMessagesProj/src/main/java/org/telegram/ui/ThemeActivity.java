@@ -122,6 +122,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class ThemeActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     public final static int THEME_TYPE_BASIC = 0;
@@ -815,6 +817,15 @@ public class ThemeActivity extends BaseFragment implements NotificationCenter.No
             previousUpdatedType = Theme.selectedAutoNightType;
         }
         updateMenuItem();
+
+        if (listView != null) {
+            listView.post(() -> {
+                RecyclerView.Adapter adapter = listView.getAdapter();
+                if (adapter instanceof MD3ListAdapter md3) {
+                    md3.reapplyVisible();
+                }
+            });
+        }
     }
 
     @Override
@@ -2010,7 +2021,7 @@ public class ThemeActivity extends BaseFragment implements NotificationCenter.No
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
         private final static int TYPE_TEXT_SETTING = 1;
         private final static int TYPE_TEXT_INFO_PRIVACY = 2;
         private final static int TYPE_SHADOW = 3;

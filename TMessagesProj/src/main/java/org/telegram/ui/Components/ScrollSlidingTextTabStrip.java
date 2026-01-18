@@ -38,6 +38,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
+import androidx.core.graphics.ColorUtils;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.Emoji;
@@ -156,9 +157,9 @@ public class ScrollSlidingTextTabStrip extends HorizontalScrollView {
         this.resourcesProvider = resourcesProvider;
 
         selectorDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, null);
-        float rad = AndroidUtilities.dpf2(3);
-        selectorDrawable.setCornerRadii(new float[]{rad, rad, rad, rad, 0, 0, 0, 0});
-        selectorDrawable.setColor(Theme.getColor(tabLineColorKey, resourcesProvider));
+        float rad = AndroidUtilities.dpf2(30);
+        selectorDrawable.setCornerRadii(new float[]{rad, rad, rad, rad, rad, rad, rad, rad});
+        selectorDrawable.setColor(ColorUtils.setAlphaComponent(Theme.getColor(tabLineColorKey, resourcesProvider), 0x2F));
 
         setFillViewport(true);
         setWillNotDraw(false);
@@ -584,7 +585,7 @@ public class ScrollSlidingTextTabStrip extends HorizontalScrollView {
         activeTextColorKey = active;
         unactiveTextColorKey = unactive;
         selectorColorKey = selector;
-        selectorDrawable.setColor(processColor(Theme.getColor(tabLineColorKey, resourcesProvider)));
+        selectorDrawable.setColor(ColorUtils.setAlphaComponent(Theme.getColor(tabLineColorKey, resourcesProvider), 0x2F));
     }
 
     public void updateColors() {
@@ -594,7 +595,7 @@ public class ScrollSlidingTextTabStrip extends HorizontalScrollView {
             tab.setTextColor(processColor(Theme.getColor(currentPosition == a ? activeTextColorKey : unactiveTextColorKey, resourcesProvider)));
             tab.setBackground(Theme.createSelectorDrawable(Theme.multAlpha(processColor(Theme.getColor(activeTextColorKey, resourcesProvider)), .15f), 3));
         }
-        selectorDrawable.setColor(processColor(Theme.getColor(tabLineColorKey, resourcesProvider)));
+        selectorDrawable.setColor(ColorUtils.setAlphaComponent(processColor(Theme.getColor(tabLineColorKey, resourcesProvider)), 0x2F));
         invalidate();
     }
 
@@ -629,21 +630,10 @@ public class ScrollSlidingTextTabStrip extends HorizontalScrollView {
         boolean result = super.drawChild(canvas, child, drawingTime);
         if (child == tabsContainer) {
             final int height = getMeasuredHeight();
-            float l = indicatorX + indicatorXAnimationDx;
-            float r = l + indicatorWidth + indicatorWidthAnimationDx;
-
-            final View current = tabsContainer.getChildAt(currentPosition);
-            if (reordering && current != null) {
-                l += current.getTranslationX();
-                r += current.getTranslationX();
-            }
             selectorDrawable.setAlpha((int) (0xFF * tabsContainer.getAlpha()));
-            selectorDrawable.setBounds(
-                (int) l,
-                height - dpr(4),
-                (int) r,
-                height
-            );
+            float x = indicatorX + indicatorXAnimationDx;
+            float w = x + indicatorWidth + indicatorWidthAnimationDx;
+            selectorDrawable.setBounds((int) x - (AndroidUtilities.dp(12)), height / 2 - AndroidUtilities.dp(18), (int) w + (AndroidUtilities.dp(12)),height / 2 + AndroidUtilities.dp(18));
             selectorDrawable.draw(canvas);
         }
         return result;

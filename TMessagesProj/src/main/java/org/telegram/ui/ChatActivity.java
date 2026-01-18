@@ -2317,6 +2317,7 @@ public class ChatActivity extends BaseFragment implements
             } else {
                 AndroidUtilities.requestAdjustResize(getParentActivity(), classGuid);
             }
+
             if (mentionContainer != null) {
                 mentionContainer.animate().alpha(chatActivityEnterView.isStickersExpanded() || isInPreviewMode() ? 0 : 1f).setInterpolator(CubicBezierInterpolator.DEFAULT).start();
             }
@@ -10279,6 +10280,7 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private void dimBehindView(View view, boolean blur, boolean enable) {
+        blur = false;
         setScrimView(view);
         dimBehindView(enable ? 0.2f : 0, blur, view != sideControlsButtonsLayout);
     }
@@ -10330,6 +10332,7 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private void dimBehindView(float value, boolean blur, boolean hidePagedownButtons) {
+        blur = false;
         boolean enable = value > 0;
         if (scrimView instanceof ChatMessageCell) {
             ChatMessageCell cell = (ChatMessageCell) scrimView;

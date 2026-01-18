@@ -38,6 +38,8 @@ import org.telegram.ui.Components.SideMenultItemAnimator;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import art.clovi.CloviConfig;
+
 public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
 
     private Context mContext;
@@ -251,17 +253,19 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         int eventType = Theme.getEventType();
         int newGroupIcon;
         int newSecretIcon;
-        int newChannelIcon;
+        int newChannelIcon = R.drawable.msg_channel;
         int contactsIcon;
         int callsIcon;
         int savedIcon;
         int settingsIcon;
+        int cloviSettingIcon = R.drawable.clover;
         int inviteIcon;
         int helpIcon;
+        int developerIcon = R.drawable.msg_allowspeak;
         if (eventType == 0) {
             newGroupIcon = R.drawable.msg_groups_ny;
             //newSecretIcon = R.drawable.msg_secret_ny;
-            //newChannelIcon = R.drawable.msg_channel_ny;
+//            newChannelIcon = R.drawable.msg_channel_ny;
             contactsIcon = R.drawable.msg_contacts_ny;
             callsIcon = R.drawable.msg_calls_ny;
             savedIcon = R.drawable.msg_saved_ny;
@@ -271,7 +275,7 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         } else if (eventType == 1) {
             newGroupIcon = R.drawable.msg_groups_14;
             //newSecretIcon = R.drawable.msg_secret_14;
-            //newChannelIcon = R.drawable.msg_channel_14;
+//            newChannelIcon = R.drawable.msg_channel_14;
             contactsIcon = R.drawable.msg_contacts_14;
             callsIcon = R.drawable.msg_calls_14;
             savedIcon = R.drawable.msg_saved_14;
@@ -281,7 +285,7 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         } else if (eventType == 2) {
             newGroupIcon = R.drawable.msg_groups_hw;
             //newSecretIcon = R.drawable.msg_secret_hw;
-            //newChannelIcon = R.drawable.msg_channel_hw;
+//            newChannelIcon = R.drawable.msg_channel_hw;
             contactsIcon = R.drawable.msg_contacts_hw;
             callsIcon = R.drawable.msg_calls_hw;
             savedIcon = R.drawable.msg_saved_hw;
@@ -291,7 +295,7 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         } else {
             newGroupIcon = R.drawable.msg_groups;
             //newSecretIcon = R.drawable.msg_secret;
-            //newChannelIcon = R.drawable.msg_channel;
+//            newChannelIcon = R.drawable.msg_channel;
             contactsIcon = R.drawable.msg_contacts;
             callsIcon = R.drawable.msg_calls;
             savedIcon = R.drawable.msg_saved;
@@ -301,20 +305,18 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
         }
         UserConfig me = UserConfig.getInstance(UserConfig.selectedAccount);
         boolean showDivider = false;
-        items.add(new Item(16, LocaleController.getString(R.string.MyProfile), R.drawable.left_status_profile));
+//        items.add(new Item(16, LocaleController.getString(R.string.MyProfile), R.drawable.left_status_profile));
         if (me != null && me.isPremium()) {
-            if (me.getEmojiStatus() != null) {
-                items.add(new Item(15, LocaleController.getString(R.string.ChangeEmojiStatus), R.drawable.msg_status_edit));
-            } else {
+            if (me.getEmojiStatus() == null) {
                 items.add(new Item(15, LocaleController.getString(R.string.SetEmojiStatus), R.drawable.msg_status_set));
+                showDivider = true;
             }
-            showDivider = true;
         }
 //        if (MessagesController.getInstance(UserConfig.selectedAccount).storiesEnabled()) {
 //            items.add(new Item(17, LocaleController.getString(R.string.ProfileStories), R.drawable.msg_menu_stories));
 //            showDivider = true;
 //        }
-        showDivider = true;
+//        showDivider = true;
         if (ApplicationLoader.applicationLoaderInstance != null) {
             if (ApplicationLoader.applicationLoaderInstance.extendDrawer(items)) {
                 showDivider = true;
@@ -330,19 +332,19 @@ public class DrawerLayoutAdapter extends RecyclerListView.SelectionAdapter {
                 }
             }
         }
-        if (showDivider) {
-            items.add(null); // divider
-        }
+        if (showDivider) items.add(null); // divider
         items.add(new Item(2, LocaleController.getString(R.string.NewGroup), newGroupIcon));
         //items.add(new Item(3, LocaleController.getString(R.string.NewSecretChat), newSecretIcon));
-        //items.add(new Item(4, LocaleController.getString(R.string.NewChannel), newChannelIcon));
-        items.add(new Item(6, LocaleController.getString(R.string.Contacts), contactsIcon));
-        items.add(new Item(10, LocaleController.getString(R.string.Calls), callsIcon));
+        items.add(new Item(4, LocaleController.getString(R.string.NewChannel), newChannelIcon));
+//        items.add(new Item(6, LocaleController.getString(R.string.Contacts), contactsIcon));
+//        items.add(new Item(10, LocaleController.getString(R.string.Calls), callsIcon));
         items.add(new Item(11, LocaleController.getString(R.string.SavedMessages), savedIcon));
-        items.add(new Item(8, LocaleController.getString(R.string.Settings), settingsIcon));
+//        items.add(new Item(13, LocaleController.getString(R.string.TelegramFeatures), helpIcon));
+        if(!CloviConfig.hideDeveloperSite) items.add(new Item(18, LocaleController.getString(R.string.DeveloperSite), developerIcon));
         items.add(null); // divider
-        items.add(new Item(7, LocaleController.getString(R.string.InviteFriends), inviteIcon));
-        items.add(new Item(13, LocaleController.getString(R.string.TelegramFeatures), helpIcon));
+//        items.add(new Item(7, LocaleController.getString(R.string.InviteFriends), inviteIcon));
+        items.add(new Item(8, LocaleController.getString(R.string.Settings), settingsIcon));
+        items.add(new Item(19, LocaleController.getString(R.string.CloviSettings), cloviSettingIcon));
     }
 
     public boolean click(View view, int position) {

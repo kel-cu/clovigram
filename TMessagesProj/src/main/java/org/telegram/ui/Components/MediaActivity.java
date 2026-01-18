@@ -265,7 +265,7 @@ public class MediaActivity extends BaseFragment implements SharedMediaLayout.Sha
                 sharedMediaLayout.drawListForBlur(blurCanvas, views);
             }
         };
-        fragmentView.needBlur = true;
+        fragmentView.needBlur = false;
         this.fragmentView = fragmentView;
 
         ActionBarMenu menu2 = actionBar.createMenu();

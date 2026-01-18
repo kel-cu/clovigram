@@ -455,7 +455,7 @@ public abstract class GradientHeaderActivity extends BaseFragment {
                 drawable.type = 100;
                 drawable.roundEffect = false;
                 drawable.useRotate = false;
-                drawable.useBlur = true;
+                drawable.useBlur = false;
                 drawable.checkBounds = true;
                 drawable.isCircle = false;
                 drawable.size1 = 4;

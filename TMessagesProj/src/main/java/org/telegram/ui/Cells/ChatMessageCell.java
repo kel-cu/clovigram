@@ -229,6 +229,7 @@ import java.util.Locale;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 
+import art.clovi.util.GlyphsUtils;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 
@@ -9907,7 +9908,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                                 photoImage.setOrientation(currentMessageObject.sendPreviewEntry.orientation, currentMessageObject.sendPreviewEntry.invert, true);
                                 photoImage.setImage(ImageLocation.getForPath("thumb://" + currentMessageObject.sendPreviewEntry.imageId + ":" + currentMessageObject.sendPreviewEntry.path), null, null, null, null, null, currentMessageObject.sendPreviewEntry.thumb, 0, null, messageObject, 0);
                             }
-                            
+
                         }
                     } else if (autoPlayingMedia) {
                         photoImage.setAllowStartAnimation(true);
@@ -11200,6 +11201,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (currentMessageObject == null) {
             return;
         }
+
         if (super.invalidateCallback != null) {
             super.invalidateCallback.run();
         }

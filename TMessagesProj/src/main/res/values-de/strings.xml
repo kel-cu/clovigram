@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Telegram</string>
-    <string name="AppNameBeta">Telegram Beta</string>
+    <string name="AppName">Clovigram</string>
+    <string name="AppNameBeta">Clovigram Beta</string>
     <string name="LanguageName">Deutsch</string>
     <string name="English">Englisch</string>
     <string name="LanguageNameInEnglish">German</string>
     <string name="LanguageCode">de</string>
     <string name="ContinueOnThisLanguage">Weiter auf Deutsch</string>
+    <string name="DisabledBlurAndLiquidAss">The developer of this client is the main hater of bluer and liquid glass. That\'s why I turned it off for you :)</string>
     <!--signin view-->
     <string name="YourPhone">Dein Telefon</string>
     <string name="StartText">Bitte bestätige deine Landeskennzahl und deine Telefonnummer.</string>
@@ -180,8 +181,8 @@
     <string name="NotificationGroupFew">%1$s hat %3$s an die Gruppe %2$s gesendet</string>
     <string name="NotificationGroupAlbum">%1$s hat ein Album an die Gruppe %2$s gesendet</string>
     <string name="NotificationGroupForwardedFew">%1$s hat %3$s an die Gruppe %2$s weitergeleitet</string>
-    <string name="NotificationHiddenName">Telegram</string>
-    <string name="NotificationHiddenChatName">Telegram</string>
+    <string name="NotificationHiddenName">Clovigram</string>
+    <string name="NotificationHiddenChatName">Clovigram</string>
     <string name="NotificationHiddenChatUserName">Nutzer</string>
     <string name="NotificationHiddenMessage">Neue Nachricht</string>
     <string name="Reply">Antworten</string>
@@ -245,7 +246,7 @@
     <string name="NotificationActionPinnedGeoLiveUser">%1$s hat einen Live-Standort angeheftet</string>
     <string name="NotificationActionPinnedGifUser">%1$s hat ein GIF angeheftet</string>
     <string name="NotificationActionPinnedMusicUser">%1$s hat eine Audiodatei angeheftet</string>
-    <string name="SecretChatName">Telegram</string>
+    <string name="SecretChatName">Clovigram</string>
     <!--settings view-->
     <string name="ResetNotificationsText">Einstellungen wurden zurückgesetzt</string>
     <string name="ResetNotificationsAlertTitle">Benachrichtigungen zurücksetzen</string>
@@ -1376,4 +1377,27 @@
     <string name="RemindTodayAt">\'Heute um\' HH:mm \'erinnern\'</string>
     <string name="RemindDayAt">\'Am\' d MMM \'um\' HH:mm \'erinnern\'</string>
     <string name="RemindDayYearAt">\'Am\' d\'.\' MMM yyyy \'um\' HH:mm \'erinnern\'</string>
+    <string name="DeveloperSite">Developer\'s Website</string>
+    <string name="RestartRequired">Restart Required</string>
+    <string name="Preferences">Preferences</string>
+    <string name="CloviSettings">Clovigram Preferences</string>
+    <string name="HidePhoneNumber">Hide Phone Number</string>
+    <string name="ReplaceTitleWithName">Replace Title with your Name</string>
+    <string name="NeedRestartDescription">To apply some settings, you need to restart the application!</string>
+    <string name="NeedRestart">Need Restart!</string>
+    <string name="UseYandexMaps">Use Yandex Maps</string>
+    <string name="NoSupportedAndroidNothing">Your Android version is not supported for working with Glyph Interface</string>
+    <string name="NoNothing">Your smartphone is not supported for working with glyphs. Supported models:\\nNothing Phone (3a)</string>
+    <string name="StartWithBackCamera">Start recording circles from the rear camera</string>
+    <string name="EnableGlyphInterface">Enable Glyph Interface</string>
+    <string name="AllowShowRecordGlyph">Allow the recording indicator to be shown</string>
+    <string name="AllowShowProgressGlyph">Allow the listening indicator to be displayed</string>
+    <string name="HideStories">Hide Stories</string>
+    <string name="DisableTabletMode">Disable Tablet mode</string>
+    <string name="NothingSeries">Your Phone Series</string>
+    <string name="AppIconClovi">Clovi</string>
+    <string name="HideDeveloperSite">Hide Developer\'s Website</string>
+    <string name="UseSystemFont">Use System Fonts</string>
+    <string name="UseSystemEmoji">Use System Emoji</string>
+    <string name="useMD3ListDesign">MD3 List Design</string>
 </resources>

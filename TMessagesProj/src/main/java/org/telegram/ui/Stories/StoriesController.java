@@ -87,6 +87,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
+import art.clovi.CloviConfig;
+
 public class StoriesController {
 
     public final static int STATE_READ = 0;
@@ -159,6 +161,7 @@ public class StoriesController {
     }
 
     private TL_stories.TL_storiesStealthMode readStealthMode(String string) {
+        if(CloviConfig.hideStories) return null;
         if (string == null) {
             return null;
         }
@@ -185,7 +188,7 @@ public class StoriesController {
     }
 
     public void loadAllStories() {
-        if (!firstLoad) {
+        if (!firstLoad && !CloviConfig.hideStories) {
             loadStories();
             loadStoriesRead();
         }
@@ -246,6 +249,7 @@ public class StoriesController {
     }
 
     public boolean hasStories(long dialogId) {
+        if(CloviConfig.hideStories) return false;
         if (dialogId == 0) {
             return false;
         }
@@ -263,6 +267,7 @@ public class StoriesController {
     }
 
     public TL_stories.PeerStories getStoriesFromFullPeer(long dialogId) {
+        if(CloviConfig.hideStories) return null;
         if (dialogId > 0) {
             TLRPC.UserFull userFull = MessagesController.getInstance(currentAccount).getUserFull(dialogId);
             if (userFull != null && userFull.stories != null && !userFull.stories.checkedExpired) {
@@ -279,10 +284,12 @@ public class StoriesController {
     }
 
     public boolean hasStories() {
+        if(CloviConfig.hideStories) return false;
         return (dialogListStories != null && dialogListStories.size() > 0) || hasSelfStories();
     }
 
     public void loadStories() {
+        if(CloviConfig.hideStories) return;
         if (firstLoad) {
             loadingFromDatabase = true;
             storiesStorage.getAllStories(allStories -> {
@@ -304,6 +311,7 @@ public class StoriesController {
     }
 
     public void loadHiddenStories() {
+        if(CloviConfig.hideStories) return;
         if (hasMoreHidden) {
             loadFromServer(true);
         }
@@ -677,6 +685,7 @@ public class StoriesController {
     }
 
     public TL_stories.PeerStories getStories(long peerId) {
+        if(CloviConfig.hideStories) return null;
         return allStoriesMap.get(peerId);
     }
 
@@ -1068,6 +1077,7 @@ public class StoriesController {
     }
 
     public boolean hasSelfStories() {
+        if(CloviConfig.hideStories) return false;
         long clientUserId = UserConfig.getInstance(currentAccount).clientUserId;
         TL_stories.PeerStories storyItem = allStoriesMap.get(clientUserId);
         if (storyItem != null && !storyItem.stories.isEmpty()) {
@@ -1386,6 +1396,7 @@ public class StoriesController {
     }
 
     public boolean hasLiveStory(long dialogId) {
+        if(CloviConfig.hideStories) return false;
         TL_stories.PeerStories userStories = allStoriesMap.get(dialogId);
         if (userStories == null) {
             userStories = getStoriesFromFullPeer(dialogId);
@@ -1746,6 +1757,7 @@ public class StoriesController {
     }
 
     public boolean hasHiddenStories() {
+        if(CloviConfig.hideStories) return false;
         return !hiddenListStories.isEmpty();
     }
 
@@ -4184,7 +4196,8 @@ public class StoriesController {
     }
 
     public boolean hasOnlySelfStories() {
-        return hasSelfStories() && (getDialogListStories().isEmpty() || (getDialogListStories().size() == 1 && DialogObject.getPeerDialogId(getDialogListStories().get(0).peer) == UserConfig.getInstance(currentAccount).clientUserId));
+        return false;
+//        return hasSelfStories() && (getDialogListStories().isEmpty() || (getDialogListStories().size() == 1 && DialogObject.getPeerDialogId(getDialogListStories().get(0).peer) == UserConfig.getInstance(currentAccount).clientUserId));
     }
 
     public void sortHiddenStories() {

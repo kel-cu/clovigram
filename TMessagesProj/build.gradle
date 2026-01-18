@@ -68,6 +68,7 @@ dependencies {
         }
     }
     implementation 'com.google.android.recaptcha:recaptcha:18.4.0'
+    implementation files('libs/KetchumSDK_Community_20250805.jar')
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 }
@@ -93,8 +94,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
 
         coreLibraryDesugaringEnabled true
     }
@@ -211,6 +212,7 @@ android {
     }
 
     namespace 'org.telegram.messenger'
+//    namespace 'art.clovi.messenger'
 }
 
 

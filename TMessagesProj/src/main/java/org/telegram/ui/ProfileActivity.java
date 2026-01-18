@@ -334,6 +334,11 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import art.clovi.CloviConfig;
+import art.clovi.ui.FakeProfileHeaderEmpty;
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+import art.clovi.ui.MD3ListAdapter;
+
 public class ProfileActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate, SharedMediaLayout.SharedMediaPreloaderDelegate, ImageUpdater.ImageUpdaterDelegate, SharedMediaLayout.Delegate {
     private final static int PHONE_OPTION_CALL = 0,
             PHONE_OPTION_COPY = 1,
@@ -665,6 +670,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int addToGroupButtonRow;
     private int addToGroupInfoRow;
     private int premiumRow;
+    private int octoForcedDividerRow;
     private int starsRow;
     private int tonRow;
     private int businessRow;
@@ -3955,7 +3961,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
         fragmentView.setWillNotDraw(false);
         contentView = ((NestedFrameLayout) fragmentView);
-        contentView.needBlur = true;
+        contentView.needBlur = false;
 
         listView = new ClippedListView(context) {
 
@@ -10523,6 +10529,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         settingsKeyRow = -1;
         notificationsDividerRow = -1;
         reportDividerRow = -1;
+        octoForcedDividerRow = -1;
         notificationsRow = -1;
         bizLocationRow = -1;
         bizHoursRow = -1;
@@ -10601,6 +10608,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             TLRPC.User user = getMessagesController().getUser(userId);
             if (userInfo != null && userInfo.saved_music != null && (imageUpdater == null || myProfile)) {
                 musicRow = rowCount++;
+            }
+
+            if (MD3ListAdapter.canTryToIgnoreTopBarBackground(this)) {
+                octoForcedDividerRow = rowCount++;
             }
 
             if (actionsView == null && LocaleController.isRTL) {
@@ -10730,7 +10741,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 if (isBot && user != null && user.bot_has_main_app) {
                     botAppRow = rowCount++;
                 }
-                if (infoHeaderRowEmpty != -1 && !(bizHoursRow != -1 || bizLocationRow != -1)) {
+                if (infoHeaderRowEmpty != -1 && !(bizHoursRow != -1 || bizLocationRow != -1) && !MD3ListAdapter.isMd3ContainersEnabled()) {
                     infoEndRowEmpty = rowCount++;
                 }
                 infoEndRow = rowCount - 1;
@@ -10817,6 +10828,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
             }
         } else if (isTopic) {
+            if (MD3ListAdapter.canTryToIgnoreTopBarBackground(this)) {
+                octoForcedDividerRow = rowCount++;
+            }
             if (actionsView == null) {
                 infoHeaderRow = rowCount++;
             } else {
@@ -10826,7 +10840,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (actionsView == null) {
                 notificationsSimpleRow = rowCount++;
             }
-            if (infoHeaderRowEmpty != -1) {
+            if (infoHeaderRowEmpty != -1 && !MD3ListAdapter.isMd3ContainersEnabled()) {
                 infoEndRowEmpty = rowCount++;
             }
             infoSectionRow = rowCount++;
@@ -10834,6 +10848,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 sharedMediaRow = rowCount++;
             }
         } else if (chatId != 0) {
+            if (MD3ListAdapter.canTryToIgnoreTopBarBackground(this)) {
+                octoForcedDividerRow = rowCount++;
+            }
             if (chatInfo != null && (!TextUtils.isEmpty(chatInfo.about) || chatInfo.location instanceof TLRPC.TL_channelLocation) || ChatObject.isPublic(currentChat)) {
                 if (actionsView == null && LocaleController.isRTL && ChatObject.isChannel(currentChat) && chatInfo != null && !currentChat.megagroup && chatInfo.linked_chat_id != 0) {
                     emptyRow = rowCount++;
@@ -10854,7 +10871,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 if (ChatObject.isPublic(currentChat)) {
                     usernameRow = rowCount++;
                 }
-                if (infoHeaderRowEmpty != -1) {
+                if (infoHeaderRowEmpty != -1 && !MD3ListAdapter.isMd3ContainersEnabled()) {
                     infoEndRowEmpty = rowCount++;
                 }
             }
@@ -11018,6 +11035,16 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
         if (actionsView != null) {
             actionsView.set(ProfileActionsView.KEY_JOIN, hasJoinRow);
+        }
+
+
+        if (listView != null) {
+            listView.post(() -> {
+                RecyclerView.Adapter adapter = listView.getAdapter();
+                if (adapter instanceof MD3ListAdapter md3) {
+                    md3.reapplyVisible();
+                }
+            });
         }
     }
 
@@ -13017,7 +13044,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         });
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
         private final static int VIEW_TYPE_HEADER = 1,
                 VIEW_TYPE_TEXT_DETAIL = 2,
                 VIEW_TYPE_ABOUT_LINK = 3,
@@ -13158,13 +13185,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     break;
                 }
                 case VIEW_TYPE_HEADER_EMPTY: {
-                    view = new View(mContext) {
-                        @Override
-                        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-                            super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(7.33f), MeasureSpec.EXACTLY));
-                        }
-                    };
-                    view.setBackgroundColor(getThemedColor(Theme.key_windowBackgroundWhite));
+                    view = new FakeProfileHeaderEmpty(mContext, getThemedColor(MD3ListAdapter.canTryToIgnoreTopBarBackground() ? Theme.key_windowBackgroundGray : Theme.key_windowBackgroundWhite));
                     break;
                 }
                 case VIEW_TYPE_BOTTOM_PADDING: {
@@ -13236,10 +13257,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     cell.getTextView().setGravity(Gravity.CENTER_HORIZONTAL);
                     cell.getTextView().setTextColor(getThemedColor(Theme.key_windowBackgroundWhiteGrayText3));
                     cell.getTextView().setMovementMethod(null);
-                    cell.setText(AndroidUtilities.getBuildVersionInfo());
+                    cell.setText(AndroidUtilities.getBuildVersionInfo()+"\nMade with ❤ by Kel Caffeine");
                     cell.getTextView().setPadding(0, AndroidUtilities.dp(14), 0, AndroidUtilities.dp(14));
+                    cell.setTag(VIEW_TYPE_VERSION);
                     view = cell;
-                    view.setBackgroundDrawable(Theme.getThemedDrawable(mContext, R.drawable.greydivider_bottom, getThemedColor(Theme.key_windowBackgroundGrayShadow)));
+                    if (!MD3ListAdapter.isMd3ContainersEnabled()) view.setBackgroundDrawable(Theme.getThemedDrawable(mContext, R.drawable.greydivider_bottom, getThemedColor(Theme.key_windowBackgroundGrayShadow)));
                     break;
                 }
                 case VIEW_TYPE_SUGGESTION: {
@@ -13400,7 +13422,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             text = PhoneFormat.getInstance().format("+" + vcardPhone);
                             phoneNumber = vcardPhone;
                         } else if (user != null && !TextUtils.isEmpty(user.phone)) {
-                            text = PhoneFormat.getInstance().format("+" + user.phone);
+                            text = CloviConfig.hidePhoneNumber ? LocaleController.getString("MobileHidden",R.string.MobileHidden) :  PhoneFormat.getInstance().format("+" + user.phone);
                             phoneNumber = user.phone;
                         } else {
                             text = LocaleController.getString(R.string.PhoneHidden);
@@ -13493,7 +13515,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (position == numberRow) {
                         TLRPC.User user = UserConfig.getInstance(currentAccount).getCurrentUser();
                         String value;
-                        if (user != null && user.phone != null && user.phone.length() != 0) {
+                        if(CloviConfig.hidePhoneNumber) {
+                            value = LocaleController.getString("MobileHidden",R.string.MobileHidden);
+                        } else if (user != null && user.phone != null && user.phone.length() != 0) {
                             value = PhoneFormat.getInstance().format("+" + user.phone);
                         } else {
                             value = LocaleController.getString(R.string.NumberUnknown);
@@ -13931,6 +13955,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else {
                         cell.setBackgroundDrawable(Theme.getThemedDrawable(mContext, R.drawable.greydivider, getThemedColor(Theme.key_windowBackgroundGrayShadow)));
                     }
+                    if (position == policyRow) {
+                        cell.setTag(VIEW_TYPE_SHADOW_TEXT); // Tag for MD3ListAdapter to treat as content
+                    }
                     break;
                 }
                 case VIEW_TYPE_COLORFUL_TEXT: {
@@ -14214,7 +14241,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     position == helpSectionCell || position == setAvatarSectionRow || position == passwordSuggestionSectionRow ||
                     position == phoneSuggestionSectionRow || position == premiumSectionsRow || position == reportDividerRow ||
                     position == channelDividerRow || position == graceSuggestionSectionRow || position == balanceDividerRow ||
-                    position == botPermissionsDivider || position == channelBalanceSectionRow
+                    position == botPermissionsDivider || position == channelBalanceSectionRow || position == octoForcedDividerRow
             ) {
                 return VIEW_TYPE_SHADOW;
             } else if (position >= membersStartRow && position < membersEndRow) {
@@ -15270,6 +15297,12 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         diffCallback.fillPositions(diffCallback.newPositionToItem);
         try {
             DiffUtil.calculateDiff(diffCallback).dispatchUpdatesTo(listAdapter);
+            listView.post(() -> {
+                RecyclerView.Adapter adapter = listView.getAdapter();
+                if (adapter instanceof MD3ListAdapter md3) {
+                    md3.reapplyVisible();
+                }
+            });
         } catch (Exception e) {
             FileLog.e(e);
             listAdapter.notifyDataSetChanged();
@@ -15533,6 +15566,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             put(++pointer, usernameRow, sparseIntArray);
             put(++pointer, notificationsDividerRow, sparseIntArray);
             put(++pointer, reportDividerRow, sparseIntArray);
+            put(++pointer, octoForcedDividerRow, sparseIntArray);
             put(++pointer, notificationsRow, sparseIntArray);
             put(++pointer, infoSectionRow, sparseIntArray);
             put(++pointer, affiliateRow, sparseIntArray);
@@ -16337,11 +16371,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             return false;
         }
 
+        itemOptions.setDrawScrim(!MD3ListAdapter.isMd3ContainersEnabled());
         itemOptions.show();
 
         return true;
     }
-
     private void updateItemsUsername() {
         if (!myProfile || setUsernameItem == null || linkItem == null) return;
         TLRPC.User user = getMessagesController().getUser(userId);

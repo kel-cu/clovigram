@@ -27,7 +27,7 @@ public class DownscaleScrollableNoiseSuppressor {
     private final RenderEffect saturationUpEffect;
 
     public DownscaleScrollableNoiseSuppressor() {
-        isLiquidGlassEnabled = LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS);
+        isLiquidGlassEnabled = false;
         resultRenderNodes[0] = new RenderNode(null);
         resultRenderNodes[1] = new RenderNode(null);
         final ColorMatrix colorMatrix = new ColorMatrix();
@@ -45,9 +45,7 @@ public class DownscaleScrollableNoiseSuppressor {
             throw new IllegalStateException();
         }
 
-        if (index == DRAW_GLASS) {
-            canvas.drawRenderNode(resultRenderNodes[isLiquidGlassEnabled ? 0 : 1]);
-        } else if (index == DRAW_FROSTED_GLASS_NO_SATURATION) {
+        if (index == DRAW_FROSTED_GLASS_NO_SATURATION) {
             canvas.drawRenderNode(resultRenderNodes[0]);
         } else if (index == DRAW_FROSTED_GLASS) {
             canvas.drawRenderNode(resultRenderNodes[1]);
@@ -175,7 +173,7 @@ public class DownscaleScrollableNoiseSuppressor {
 
     // This constant approximates the scaling done in the software path's
     // "high quality" mode, in SkBlurMask::Blur() (1 / sqrt(3)).
-    public static final float BLUR_SIGMA_SCALE = 0.57735f;
+    public static final float BLUR_SIGMA_SCALE = 1f;
 
     public static float convertRadiusToSigma(float radius) {
         return radius > 0 ? BLUR_SIGMA_SCALE * radius + 0.5f : 0.0f;
@@ -222,15 +220,15 @@ public class DownscaleScrollableNoiseSuppressor {
                 canvas.save();
                 canvas.translate(sourcePart.position.left, sourcePart.position.top);
 
-                if (isLiquidGlassEnabled && sourcePart.renderNodesForGlass != null) {
-                    if (a == 0) {
-                        canvas.drawRenderNode(sourcePart.renderNodesForGlass.renderNodeRestored[0]);
-                    } else {
-                        canvas.drawRenderNode(sourcePart.renderNodesForBlur.renderNodeRestored[0]);
-                    }
-                } else {
+//                if (isLiquidGlassEnabled && sourcePart.renderNodesForGlass != null) {
+//                    if (a == 0) {
+//                        canvas.drawRenderNode(sourcePart.renderNodesForGlass.renderNodeRestored[0]);
+//                    } else {
+//                        canvas.drawRenderNode(sourcePart.renderNodesForBlur.renderNodeRestored[0]);
+//                    }
+//                } else {
                     canvas.drawRenderNode(sourcePart.renderNodesForBlur.renderNodeRestored[Math.min(a, sourcePart.renderNodesForBlur.renderNodeRestored.length)]);
-                }
+//                }
 
                 canvas.restore();
             }
@@ -255,21 +253,21 @@ public class DownscaleScrollableNoiseSuppressor {
 
         private SourcePart() {
             renderNode.setClipToBounds(true);
-            if (isLiquidGlassEnabled) {
-                renderNodesForGlass = new DownscaledRenderNode(0);
-                renderNodesForGlass.renderNodeDownsampled[0].setUseCompositingLayer(true, null);
-                renderNodesForGlass.setScale(4, 4);
-                renderNodesForGlass.setPrimaryEffectBlur(dpf2(1.66f), saturationUpEffect);
-                renderNodesForBlur = new DownscaledRenderNode(0);
-                renderNodesForBlur.setScale(16, 16);
-                renderNodesForBlur.setPrimaryEffectBlur(dpf2(30 - 1.66f));
-            } else {
+//            if (isLiquidGlassEnabled) {
+//                renderNodesForGlass = new DownscaledRenderNode(0);
+//                renderNodesForGlass.renderNodeDownsampled[0].setUseCompositingLayer(true, null);
+//                renderNodesForGlass.setScale(4, 4);
+//                renderNodesForGlass.setPrimaryEffectBlur(dpf2(1.66f), saturationUpEffect);
+//                renderNodesForBlur = new DownscaledRenderNode(0);
+//                renderNodesForBlur.setScale(16, 16);
+//                renderNodesForBlur.setPrimaryEffectBlur(dpf2(30 - 1.66f));
+//            } else {
                 renderNodesForBlur = new DownscaledRenderNode(1);
                 renderNodesForBlur.setScale(16, 16);
                 renderNodesForBlur.setPrimaryEffectBlur(dpf2(30));
                 renderNodesForBlur.setSecondaryEffect(0, saturationUpEffect);
                 renderNodesForGlass = null;
-            }
+//            }
             renderNodesForBlur.renderNodeDownsampled[0].setUseCompositingLayer(true, null);
         }
 

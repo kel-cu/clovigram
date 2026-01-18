@@ -69,6 +69,8 @@ import org.telegram.ui.Components.UndoView;
 
 import java.util.ArrayList;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+
 public class FiltersSetupActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private RecyclerListView listView;
@@ -846,7 +848,7 @@ public class FiltersSetupActivity extends BaseFragment implements NotificationCe
         }
     }
 
-    private class ListAdapter extends AdapterWithDiffUtils {
+    private class ListAdapter extends MD3AdapterWithDiffUtils {
 
         private Context mContext;
 

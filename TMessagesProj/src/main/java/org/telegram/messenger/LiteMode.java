@@ -152,6 +152,7 @@ public class LiteMode {
             // always enabled for tablets
             return true;
         }
+        if(flag == FLAG_LIQUID_GLASS || flag == FLAG_CHAT_BLUR) return false;
         return (getValue() & preprocessFlag(flag)) > 0;
     }
 

@@ -19,6 +19,8 @@
     <uses-feature android:name="android.hardware.camera2" android:required="false" />
     <uses-feature android:name="android.hardware.sensor.proximity" android:required="false" />
 
+    <uses-permission android:name="com.nothing.ketchum.permission.ENABLE"/>
+
     <uses-permission android:name="android.permission.READ_CLIPBOARD"/>
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -281,7 +283,8 @@
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="*/*"/>
             </intent-filter>
-            <meta-data android:name="android.service.chooser.chooser_target_service" android:value="androidx.sharetarget.ChooserTargetServiceCompat" />
+            <meta-data android:name="android.service.chooser.chooser_target_service" android:value="androidx.sharetarget.ChooserTargetServiceCompat"
+                tools:targetApi="23" />
             <meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts" />
             <meta-data
                 android:name="com.google.mlkit.vision.DEPENDENCIES"
@@ -421,7 +424,7 @@
         <receiver
             android:name=".AutoMessageReplyReceiver"
             android:exported="false">
-e            <intent-filter>
+            <intent-filter>
                 <action android:name="org.telegram.messenger.ACTION_MESSAGE_REPLY"/>
             </intent-filter>
         </receiver>
@@ -659,7 +662,7 @@ e            <intent-filter>
             android:name=".FilesMigrationService"
             android:exported="false"
             android:foregroundServiceType="dataSync"
-        />
+            tools:targetApi="30" />
 
         <uses-library android:name="com.sec.android.app.multiwindow" android:required="false" />
         <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />

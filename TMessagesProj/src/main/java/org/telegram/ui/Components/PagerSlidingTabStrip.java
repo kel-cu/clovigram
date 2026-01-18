@@ -199,7 +199,9 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
         tab.setSelected(position == currentPosition);
     }
 
-
+    private int getThemedColor(int key) {
+        return Theme.getColor(key, resourcesProvider);
+    }
     private void updateTabStyles() {
         for (int i = 0; i < tabCount; i++) {
             View v = tabsContainer.getChildAt(i);
@@ -249,7 +251,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
+        super.onDraw(canvas);
         if (isInEditMode() || tabCount == 0) {
             super.onDraw(canvas);
             return;
@@ -292,12 +294,14 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 
             if (indicatorHeight != 0) {
                 rectPaint.setColor(indicatorColor);
-                AndroidUtilities.rectTmp.set(lineLeft - AndroidUtilities.dp(12), AndroidUtilities.dp(6), lineRight  + AndroidUtilities.dp(12), height - AndroidUtilities.dp(6));
-                canvas.drawRoundRect(AndroidUtilities.rectTmp, AndroidUtilities.rectTmp.height() / 2f, AndroidUtilities.rectTmp.height() / 2f, rectPaint);
+                AndroidUtilities.rectTmp.set(lineLeft, height - indicatorHeight, lineRight, height);
+                rectPaint.setAlpha(0x2F);
+                int sideBound = AndroidUtilities.dp(10);
+                AndroidUtilities.rectTmp.set(lineLeft - sideBound,  height / 2 - AndroidUtilities.dp(15), lineRight + sideBound, height / 2 + AndroidUtilities.dp(15));
+                float r = AndroidUtilities.dp(30);
+                canvas.drawRoundRect(AndroidUtilities.rectTmp, r, r, rectPaint);
             }
         }
-
-        super.onDraw(canvas);
     }
 
     private class PageListener implements OnPageChangeListener {

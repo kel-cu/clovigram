@@ -32,6 +32,7 @@ public class VideoFrameDrawer {
   public static void drawTexture(RendererCommon.GlDrawer drawer, VideoFrame.TextureBuffer buffer,
       Matrix renderMatrix, int rotatedWidth, int rotatedHeight, int frameWidth, int frameHeight, int viewportX, int viewportY,
       int viewportWidth, int viewportHeight, boolean blur) {
+      blur = false;
     Matrix finalMatrix = new Matrix(buffer.getTransformMatrix());
     finalMatrix.preConcat(renderMatrix);
     float[] finalGlMatrix = RendererCommon.convertMatrixFromAndroidGraphicsMatrix(finalMatrix);
@@ -195,6 +196,7 @@ public class VideoFrameDrawer {
   public void drawFrame(VideoFrame frame, RendererCommon.GlDrawer drawer,
       @Nullable Matrix additionalRenderMatrix, int viewportX, int viewportY, int viewportWidth,
       int viewportHeight, boolean rotate, boolean blur) {
+
     final int width = rotate ? frame.getRotatedHeight() : frame.getRotatedWidth();
     final int height = rotate ? frame.getRotatedWidth() : frame.getRotatedHeight();
     calculateTransformedRenderSize(width, height, additionalRenderMatrix);

@@ -620,7 +620,7 @@ public class StarsIntroActivity extends GradientHeaderActivity implements Notifi
                 drawable.type = 105;
                 drawable.roundEffect = false;
                 drawable.useRotate = false;
-                drawable.useBlur = true;
+                drawable.useBlur = false;
                 drawable.checkBounds = true;
                 drawable.isCircle = false;
                 drawable.useScale = true;

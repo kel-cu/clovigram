@@ -43,6 +43,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
+import art.clovi.CloviConfig;
+import art.clovi.util.FontHelper;
+
 public class Emoji {
 
     private final static HashMap<CharSequence, DrawableInfo> rects = new HashMap<>();
@@ -360,6 +363,7 @@ public class Emoji {
     public static class SimpleEmojiDrawable extends EmojiDrawable {
         private DrawableInfo info;
         private static Paint paint = new Paint(Paint.FILTER_BITMAP_FLAG);
+        private static Paint textPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
         private static Rect rect = new Rect();
         private boolean invert;
 
@@ -397,6 +401,14 @@ public class Emoji {
                 b = getDrawRect();
             } else {
                 b = getBounds();
+            }
+
+            if (CloviConfig.useSystemEmoji) {
+                String emoji = fixEmoji(EmojiData.data[info.page][info.emojiIndex]);
+                textPaint.setTypeface(FontHelper.getSystemEmojiTypeface());
+                textPaint.setTextSize(b.height() * 0.8f);
+                canvas.drawText(emoji, 0, emoji.length(), b.left, b.bottom - b.height() * 0.225f, textPaint);
+                return;
             }
 
             if (!canvas.quickReject(b.left, b.top, b.right, b.bottom, Canvas.EdgeType.AA)) {

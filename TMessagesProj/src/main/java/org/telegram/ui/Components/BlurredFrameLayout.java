@@ -22,7 +22,7 @@ public class BlurredFrameLayout extends FrameLayout {
     public int backgroundPaddingBottom;
     public int backgroundPaddingTop;
     public boolean isTopView = true;
-    public boolean drawBlur = true;
+    public boolean drawBlur = false;
 
     public BlurredFrameLayout(@NonNull Context context, SizeNotifierFrameLayout sizeNotifierFrameLayout) {
         super(context);

@@ -49,6 +49,8 @@ import org.telegram.ui.Components.ScrollSlidingTextTabStrip;
 
 import java.util.ArrayList;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class DataUsageActivity extends BaseFragment {
 
     private class ViewPage extends FrameLayout {
@@ -608,7 +610,7 @@ public class DataUsageActivity extends BaseFragment {
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

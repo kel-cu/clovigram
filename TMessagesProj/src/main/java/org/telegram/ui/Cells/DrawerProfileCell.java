@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -71,6 +72,8 @@ import org.telegram.ui.Components.SnowflakesEffect;
 import org.telegram.ui.ThemeActivity;
 
 import java.util.ArrayList;
+
+import art.clovi.CloviConfig;
 
 public class DrawerProfileCell extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -720,9 +723,21 @@ public class DrawerProfileCell extends FrameLayout implements NotificationCenter
         }
         animatedStatus.setColor(Theme.getColor(Theme.isCurrentThemeDark() ? Theme.key_chats_verifiedBackground : Theme.key_chats_menuPhoneCats));
         status.setColor(Theme.getColor(Theme.isCurrentThemeDark() ? Theme.key_chats_verifiedBackground : Theme.key_chats_menuPhoneCats));
-        phoneTextView.setText(PhoneFormat.getInstance().format("+" + user.phone));
+        if (!CloviConfig.hidePhoneNumber) {
+            phoneTextView.setText(PhoneFormat.getInstance().format("+" + user.phone));
+        } else if (!TextUtils.isEmpty(UserObject.getPublicUsername(user))) {
+            phoneTextView.setText("@" + UserObject.getPublicUsername(user));
+        } else {
+            phoneTextView.setText(LocaleController.getString("MobileHidden",R.string.MobileHidden));
+        }
         AvatarDrawable avatarDrawable = new AvatarDrawable(user);
-        avatarDrawable.setColor(Theme.getColor(Theme.key_avatar_backgroundInProfileBlue));
+        if(user.profile_color != null){
+            avatarDrawable.setColor(user.profile_color.color);
+            setBackgroundColor(user.profile_color.color);
+        } else {
+            avatarDrawable.setColor(Theme.getColor(Theme.key_avatar_backgroundInProfileBlue));
+            setBackgroundColor(Theme.getColor(Theme.key_avatar_backgroundInProfileBlue));
+        }
         avatarImageView.setForUserOrChat(user, avatarDrawable);
         applyBackground(true);
         updateRightDrawable = true;

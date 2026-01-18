@@ -125,6 +125,9 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
+import art.clovi.CloviConfig;
+import art.clovi.util.GlyphsUtils;
+
 @SuppressLint("ViewConstructor")
 public class InstantCameraView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -593,6 +596,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
     }
 
     public void destroy(boolean async) {
+        GlyphsUtils.turnOff();
         if (useCamera2) {
             for (int a = 0; a < camera2Sessions.length; ++a) {
                 if (camera2Sessions[a] != null) {
@@ -617,13 +621,14 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
             recordedTime = System.currentTimeMillis() - recordStartTime + recordPlusTime;
             progress = Math.min(1f, recordedTime / 60000.0f);
             invalidate();
-        }
+        } else GlyphsUtils.turnOff();
 
         if (progress != 0) {
             canvas.save();
             if (!flipAnimationInProgress) {
                 canvas.scale(cameraContainer.getScaleX(), cameraContainer.getScaleY(), rect.centerX(), rect.centerY());
             }
+            GlyphsUtils.sendRoundVideo(progress, true);
             canvas.drawArc(rect, -90, 360 * progress, false, paint);
             canvas.restore();
         }
@@ -665,6 +670,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
         if (recording) {
             cancelled = recordedTime < 800;
             recording = false;
+            GlyphsUtils.turnOff();
             updateFlash();
             if (cameraThread != null) {
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.recordStopped, recordingGuid, cancelled ? 4 : 2);
@@ -731,7 +737,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
         selectedCamera = null;
         if (!fromPaused) {
             if (!useCamera2) {
-                isFrontface = true;
+                isFrontface = !CloviConfig.startWithBackCamera;
             }
             updateFlash();
             recordedTime = 0;
@@ -793,7 +799,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 }
                 if (camera2SessionCurrent == null) return;
             } else {
-                camera2SessionCurrent = camera2Sessions[isFrontface ? 0 : 1] = Camera2Session.create(isFrontface, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
+                camera2SessionCurrent = camera2Sessions[!CloviConfig.startWithBackCamera ? 0 : 1] = Camera2Session.create(isFrontface, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
                 if (camera2SessionCurrent == null) return;
                 camera2SessionCurrent.setRecordingVideo(true);
                 previewSize[0] = new Size(camera2SessionCurrent.getPreviewWidth(), camera2SessionCurrent.getPreviewHeight());
@@ -1144,9 +1150,10 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 if (camera2SessionCurrent != null) {
                     camera2SessionCurrent.destroy(false);
                     camera2SessionCurrent = null;
-                    camera2Sessions[isFrontface ? 1 : 0] = null;
+                    camera2Sessions[!CloviConfig.startWithBackCamera ? 1 : 0] = null;
                 }
-                camera2SessionCurrent = camera2Sessions[isFrontface ? 0 : 1] = Camera2Session.create(isFrontface, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
+                camera2SessionCurrent = camera2Sessions[!CloviConfig.startWithBackCamera ? 0 : 1] = Camera2Session.create(isFrontface, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
+                camera2SessionCurrent = camera2Sessions[!CloviConfig.startWithBackCamera ? 0 : 1] = Camera2Session.create(isFrontface, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize, MessagesController.getInstance(UserConfig.selectedAccount).roundVideoSize);
                 if (camera2SessionCurrent == null) return;
                 camera2SessionCurrent.setRecordingVideo(true);
                 previewSize[0] = new Size(camera2SessionCurrent.getPreviewWidth(), camera2SessionCurrent.getPreviewHeight());

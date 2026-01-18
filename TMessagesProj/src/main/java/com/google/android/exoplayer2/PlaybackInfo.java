@@ -29,7 +29,8 @@ import java.util.List;
 /* package */ final class PlaybackInfo {
 
   /**
-   * Placeholder media period id used while the timeline is empty and no period id is specified.
+   * Placeholder media period id used while the
+   * timeline is empty and no period id is specified.
    * This id is used when playback infos are created with {@link #createDummy(TrackSelectorResult)}.
    */
   private static final MediaPeriodId PLACEHOLDER_MEDIA_PERIOD_ID =
@@ -37,7 +38,10 @@ import java.util.List;
 
   /** The current {@link Timeline}. */
   public final Timeline timeline;
-  /** The {@link MediaPeriodId} of the currently playing media period in the {@link #timeline}. */
+  /** The {@link MediaPeriodId} of the currently playing media period in the {@link #
+   *
+   *
+   * timeline}. */
   public final MediaPeriodId periodId;
   /**
    * The requested next start position for the current period in the {@link #timeline}, in

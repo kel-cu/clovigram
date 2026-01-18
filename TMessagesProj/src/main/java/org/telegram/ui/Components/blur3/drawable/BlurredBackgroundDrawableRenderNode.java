@@ -1,6 +1,5 @@
 package org.telegram.ui.Components.blur3.drawable;
 
-import static org.telegram.messenger.AndroidUtilities.dp;
 import static org.telegram.messenger.AndroidUtilities.dpf2;
 
 import android.graphics.Canvas;
@@ -16,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import org.telegram.ui.ActionBar.Theme;
-import org.telegram.ui.Components.blur3.LiquidGlassEffect;
 import org.telegram.ui.Components.blur3.source.BlurredBackgroundSource;
 import org.telegram.ui.Components.blur3.source.BlurredBackgroundSourceRenderNode;
 
@@ -50,11 +48,10 @@ public class BlurredBackgroundDrawableRenderNode extends BlurredBackgroundDrawab
         this.paintStrokeBottom.setStyle(Paint.Style.STROKE);
     }
 
-    private LiquidGlassEffect liquidGlassEffect;
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     public void setLiquidGlassEffectAllowed() {
-        liquidGlassEffect = new LiquidGlassEffect(renderNodeFill);
+//        liquidGlassEffect = new LiquidGlassEffect(renderNodeFill);
     }
 
 
@@ -106,16 +103,16 @@ public class BlurredBackgroundDrawableRenderNode extends BlurredBackgroundDrawab
         c = renderNodeFill.beginRecording();
         c.save();
         c.translate(-(boundProps.boundsWithPadding.left + offsetX), -(boundProps.boundsWithPadding.top + offsetY));
-        if (liquidGlassEffect != null && Build.VERSION.SDK_INT >= 33) {
-            liquidGlassEffect.update(
-                0, 0, boundProps.boundsWithPadding.width(), boundProps.boundsWithPadding.height(),
-                boundProps.shaderRadii[0], boundProps.shaderRadii[2], boundProps.shaderRadii[4], boundProps.shaderRadii[6],
-                boundProps.liquidThickness <= 0 ? dp(11) : boundProps.liquidThickness,
-                boundProps.liquidIntensity,
-                boundProps.liquidIndex,
-                backgroundColor
-            );
-        }
+//        if (liquidGlassEffect != null && Build.VERSION.SDK_INT >= 33) {
+//            liquidGlassEffect.update(
+//                0, 0, boundProps.boundsWithPadding.width(), boundProps.boundsWithPadding.height(),
+//                boundProps.shaderRadii[0], boundProps.shaderRadii[2], boundProps.shaderRadii[4], boundProps.shaderRadii[6],
+//                boundProps.liquidThickness <= 0 ? dp(11) : boundProps.liquidThickness,
+//                boundProps.liquidIntensity,
+//                boundProps.liquidIndex,
+//                backgroundColor
+//            );
+//        }
         source.draw(c,
             boundProps.boundsWithPadding.left + offsetX,
             boundProps.boundsWithPadding.top + offsetY,
@@ -143,7 +140,7 @@ public class BlurredBackgroundDrawableRenderNode extends BlurredBackgroundDrawab
 
         c = renderNode.beginRecording();
         c.drawRenderNode(renderNodeFill);
-        if (liquidGlassEffect == null && Color.alpha(backgroundColor) != 0) {
+        if (Color.alpha(backgroundColor) != 0) {
             c.drawColor(backgroundColor);
         }
         if (hasStroke) {

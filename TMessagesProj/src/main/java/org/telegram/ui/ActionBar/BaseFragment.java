@@ -62,6 +62,8 @@ import org.telegram.ui.bots.BotWebViewAttachedSheet;
 
 import java.util.ArrayList;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public abstract class BaseFragment {
 
     protected boolean isFinished;
@@ -380,7 +382,7 @@ public abstract class BaseFragment {
 
     public ActionBar createActionBar(Context context) {
         ActionBar actionBar = new ActionBar(context, getResourceProvider());
-        actionBar.setBackgroundColor(getThemedColor(Theme.key_actionBarDefault));
+        actionBar.setBackgroundColor(getThemedColor(MD3ListAdapter.canTryToIgnoreHeaderBackground(this) ? Theme.key_windowBackgroundGray : Theme.key_actionBarDefault));
         actionBar.setItemsBackgroundColor(getThemedColor(Theme.key_actionBarDefaultSelector), false);
         actionBar.setItemsBackgroundColor(getThemedColor(Theme.key_actionBarActionModeDefaultSelector), true);
         actionBar.setItemsColor(getThemedColor(Theme.key_actionBarDefaultIcon), false);

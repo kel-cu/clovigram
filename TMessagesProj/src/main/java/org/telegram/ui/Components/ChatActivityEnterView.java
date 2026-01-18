@@ -4385,7 +4385,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         return result;
     }
 
-    public boolean allowBlur = true;
+    public boolean allowBlur = false;
     public boolean shouldDrawBackground = true;
     public boolean shouldDrawRecordedAudioPanelInParent;
     public boolean isStories;

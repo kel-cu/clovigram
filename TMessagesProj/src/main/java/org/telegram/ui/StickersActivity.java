@@ -89,6 +89,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class StickersActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private static final int MENU_ARCHIVE = 0;
@@ -856,7 +858,7 @@ public class StickersActivity extends BaseFragment implements NotificationCenter
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
         private final static int TYPE_STICKER_SET = 0,
                 TYPE_INFO = 1,
                 TYPE_TEXT_AND_VALUE = 2,

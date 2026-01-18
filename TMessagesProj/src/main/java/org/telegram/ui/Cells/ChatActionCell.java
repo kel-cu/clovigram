@@ -517,7 +517,7 @@ public class ChatActionCell extends BaseCell implements DownloadController.FileD
         starParticlesDrawable.isCircle = false;
         starParticlesDrawable.roundEffect = true;
         starParticlesDrawable.useRotate = false;
-        starParticlesDrawable.useBlur = true;
+        starParticlesDrawable.useBlur = false;
         starParticlesDrawable.checkBounds = true;
         starParticlesDrawable.size1 = 1;
         starParticlesDrawable.k1 = starParticlesDrawable.k2 = starParticlesDrawable.k3 = 0.98f;

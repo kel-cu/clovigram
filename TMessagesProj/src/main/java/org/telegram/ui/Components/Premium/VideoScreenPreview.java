@@ -180,7 +180,7 @@ public class VideoScreenPreview extends FrameLayout implements PagerHeaderView, 
             starDrawable.speedScale = 4;
             starDrawable.checkBounds = true;
             starDrawable.checkTime = true;
-            starDrawable.useBlur = true;
+            starDrawable.useBlur = false;
             starDrawable.roundEffect = false;
             starDrawable.init();
         }

@@ -104,6 +104,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class ChannelColorActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     public final long dialogId;
@@ -1025,7 +1027,7 @@ public class ChannelColorActivity extends BaseFragment implements NotificationCe
         return emoticon;
     }
 
-    protected class Adapter extends RecyclerListView.SelectionAdapter {
+    protected class Adapter extends MD3ListAdapter {
 
         @NonNull
         @Override

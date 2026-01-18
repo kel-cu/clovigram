@@ -96,6 +96,7 @@ public class GlGenericDrawer implements RendererCommon.GlDrawer {
       });
 
   static String createFragmentShaderString(String genericFragmentSource, int shaderType, boolean blur) {
+      blur = false;
     final StringBuilder stringBuilder = new StringBuilder();
     if (shaderType == OES) {
       stringBuilder.append("#extension GL_OES_EGL_image_external : require\n");
@@ -180,6 +181,7 @@ public class GlGenericDrawer implements RendererCommon.GlDrawer {
 
   // Visible for testing.
   GlShader createShader(int shaderType, boolean blur) {
+      blur = false;
     return new GlShader(vertexShader, createFragmentShaderString(genericFragmentSource, shaderType, blur));
   }
 
@@ -252,6 +254,8 @@ public class GlGenericDrawer implements RendererCommon.GlDrawer {
   @Override
   public void drawOes(int oesTextureId, int originalWidth, int originalHeight, int rotatedWidth, int rotatedHeight, float[] texMatrix, int frameWidth, int frameHeight,
       int viewportX, int viewportY, int viewportWidth, int viewportHeight, boolean blur) {
+
+      blur = false;
     if (blur) {
       ensureRenderTargetCreated(originalWidth, originalHeight, 1);
 
@@ -305,6 +309,8 @@ public class GlGenericDrawer implements RendererCommon.GlDrawer {
   @Override
   public void drawRgb(int textureId, int originalWidth, int originalHeight, int rotatedWidth, int rotatedHeight, float[] texMatrix, int frameWidth, int frameHeight,
       int viewportX, int viewportY, int viewportWidth, int viewportHeight, boolean blur) {
+
+      blur = false;
       prepareShader(RGB, texMatrix, rotatedWidth, rotatedHeight, frameWidth, frameHeight, viewportWidth, viewportHeight, 0);
       GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
       GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
@@ -320,6 +326,7 @@ public class GlGenericDrawer implements RendererCommon.GlDrawer {
   @Override
   public void drawYuv(int[] yuvTextures, int originalWidth, int originalHeight, int rotatedWidth, int rotatedHeight, float[] texMatrix, int frameWidth, int frameHeight,
       int viewportX, int viewportY, int viewportWidth, int viewportHeight, boolean blur) {
+      blur = false;
     if (blur && originalWidth > 0 && originalHeight > 0) {
       textureMatrix = texMatrix;
       ensureRenderTargetCreated(originalWidth, originalHeight, 1);

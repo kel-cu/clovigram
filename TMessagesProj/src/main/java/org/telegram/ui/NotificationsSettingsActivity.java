@@ -71,6 +71,8 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Map;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class NotificationsSettingsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     public static class NotificationException {
@@ -873,7 +875,7 @@ public class NotificationsSettingsActivity extends BaseFragment implements Notif
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

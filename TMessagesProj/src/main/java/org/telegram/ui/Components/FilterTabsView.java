@@ -866,7 +866,7 @@ public class FilterTabsView extends FrameLayout {
 
             int color1 = Theme.getColor(tabLineColorKey, resourcesProvider);
             int color2 = Theme.getColor(aTabLineColorKey, resourcesProvider);
-            selectorDrawable.setColor(ColorUtils.blendARGB(color1, color2, value));
+            selectorDrawable.setColor(ColorUtils.setAlphaComponent(ColorUtils.blendARGB(color1, color2, value), 0x2F));
 
             listView.invalidateViews();
             listView.invalidate();
@@ -1025,8 +1025,8 @@ public class FilterTabsView extends FrameLayout {
         };
         itemAnimator.setDelayAnimations(false);
         listView.setItemAnimator(itemAnimator);
-        listView.setSelectorType(8);
-        listView.setSelectorRadius(6);
+        listView.setSelectorType(100);
+        listView.setSelectorRadius(8);
         listView.setSelectorDrawableColor(Theme.getColor(selectorColorKey));
         listView.setLayoutManager(layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
 
@@ -1388,7 +1388,8 @@ public class FilterTabsView extends FrameLayout {
                 canvas.save();
                 canvas.translate(listView.getTranslationX(), 0);
                 canvas.scale(listView.getScaleX(), 1f, listView.getPivotX() + listView.getX(), listView.getPivotY());
-                selectorDrawable.setBounds((int) indicatorX, height - AndroidUtilities.dpr(4), (int) (indicatorX + indicatorWidth), height);
+                updateSelector();
+                selectorDrawable.setBounds((int) indicatorX - AndroidUtilities.dp(12), height / 2 - AndroidUtilities.dp(18), (int) (indicatorX + indicatorWidth) + AndroidUtilities.dp(12), height / 2 + AndroidUtilities.dp(18));
                 selectorDrawable.draw(canvas);
                 canvas.restore();
             }
@@ -1918,5 +1919,9 @@ public class FilterTabsView extends FrameLayout {
     protected void onDefaultTabMoved() {
 
     }
-
+    public void updateSelector() {
+        selectorDrawable.setColor(ColorUtils.setAlphaComponent(Theme.getColor(tabLineColorKey), 0x2F));
+        float rad = AndroidUtilities.dpf2(30);
+            selectorDrawable.setCornerRadii(new float[]{rad, rad, rad, rad, rad, rad, rad, rad});
+    }
 }

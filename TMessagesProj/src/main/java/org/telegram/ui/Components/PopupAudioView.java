@@ -31,6 +31,8 @@ import org.telegram.ui.Cells.BaseCell;
 
 import java.io.File;
 
+import art.clovi.util.GlyphsUtils;
+
 public class PopupAudioView extends BaseCell implements SeekBar.SeekBarDelegate, DownloadController.FileDownloadProgressListener {
 
     private boolean wasLayout = false;
@@ -246,6 +248,7 @@ public class PopupAudioView extends BaseCell implements SeekBar.SeekBarDelegate,
 
     public void updateProgress() {
         if (currentMessageObject == null) {
+            GlyphsUtils.turnOff();
             return;
         }
 

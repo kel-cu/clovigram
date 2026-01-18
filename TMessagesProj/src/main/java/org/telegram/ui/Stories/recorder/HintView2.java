@@ -256,7 +256,7 @@ public class HintView2 extends View {
     }
 
     public HintView2 allowBlur(boolean allow) {
-        useBlur = allow && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
+        useBlur = false;//allow && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
         return this;
     }
 

@@ -70,6 +70,8 @@ import org.telegram.ui.Stories.StoriesUtilities;
 
 import java.util.Locale;
 
+import art.clovi.CloviConfig;
+
 public class ProfileSearchCell extends BaseCell implements NotificationCenter.NotificationCenterDelegate, Theme.Colorable {
 
     public boolean dontDrawAvatar;
@@ -514,7 +516,9 @@ public class ProfileSearchCell extends BaseCell implements NotificationCenter.No
         }
         nameString = AndroidUtilities.replaceNewLines(nameString);
         if (TextUtils.isEmpty(nameString)) {
-            if (user != null && !TextUtils.isEmpty(user.phone)) {
+            if(CloviConfig.hidePhoneNumber){
+                nameString = LocaleController.getString("MobileHidden", R.string.MobileHidden);
+            }else if (user != null && !TextUtils.isEmpty(user.phone)) {
                 nameString = PhoneFormat.getInstance().format("+" + user.phone);
             } else {
                 nameString = getString(R.string.HiddenName);

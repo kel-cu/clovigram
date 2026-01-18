@@ -259,6 +259,10 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import art.clovi.Clovigram;
+import art.clovi.preferences.MainPreferencesActivity;
+import art.clovi.util.GlyphsUtils;
+
 public class LaunchActivity extends BasePermissionsActivity implements INavigationLayout.INavigationLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate, IPipActivity {
     public final static String EXTRA_FORCE_NOT_INTERNAL_APPS = "force_not_internal_apps";
     public final static String EXTRA_FORCE_REQUEST = "force_request";
@@ -723,6 +727,12 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                     args.putLong("dialog_id", UserConfig.getInstance(currentAccount).getClientUserId());
                     args.putInt("type", MediaActivity.TYPE_STORIES);
                     presentFragment(new MediaActivity(args, null));
+                } else if (id == 18) {
+                    Browser.openUrl(LaunchActivity.this, "https://kelcuprum.ru");
+                    drawerLayoutContainer.closeDrawer(false);
+                } else if (id == 19) {
+                    presentFragment(new MainPreferencesActivity());
+                    drawerLayoutContainer.closeDrawer(false);
                 }
             }
         });
@@ -1082,6 +1092,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 //                }
 //            );
 //        }
+        Clovigram.init(getApplicationContext());
     }
 
     private void showAttachMenuBot(TLRPC.TL_attachMenuBot attachMenuBot, String startApp, boolean sidemenu) {
@@ -7055,6 +7066,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
     @Override
     protected void onDestroy() {
         isActive = false;
+        GlyphsUtils.destroy();
         unregisterReceiver(batteryReceiver);
         if (PhotoViewer.getPipInstance() != null) {
             PhotoViewer.getPipInstance().destroyPhotoViewer();
@@ -8380,6 +8392,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         } else if (currentConnectionState == ConnectionsManager.ConnectionStateConnecting) {
             title = "Connecting";
             titleId = R.string.Connecting;
+        } else {
+//            title = "Clovigram";
+//            titleId = R.string.AppName;
         }
         if (currentConnectionState == ConnectionsManager.ConnectionStateConnecting || currentConnectionState == ConnectionsManager.ConnectionStateConnectingToProxy) {
             action = () -> {

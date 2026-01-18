@@ -228,6 +228,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
+import art.clovi.CloviConfig;
+import art.clovi.util.FontHelper;
 import me.vkryl.core.BitwiseUtils;
 
 public class AndroidUtilities {
@@ -239,6 +241,8 @@ public class AndroidUtilities {
     public final static int REPLACING_TAG_TYPE_LINK_NBSP = 3;
     public final static int REPLACING_TAG_TYPE_UNDERLINE = 4;
 
+    public final static String TYPEFACE_ROBOTO_CONDENSED_BOLD = "fonts/rcondensedbold.ttf";
+    public final static String TYPEFACE_ROBOTO_ITALIC = "fonts/ritalic.ttf";
     public final static String TYPEFACE_ROBOTO_MEDIUM = "fonts/rmedium.ttf";
     public final static String TYPEFACE_ROBOTO_MEDIUM_ITALIC = "fonts/rmediumitalic.ttf";
     public final static String TYPEFACE_ROBOTO_MONO = "fonts/rmono.ttf";
@@ -2305,32 +2309,17 @@ public class AndroidUtilities {
     }
 
     public static Typeface getTypeface(String assetPath) {
-        synchronized (typefaceCache) {
-            if (!typefaceCache.containsKey(assetPath)) {
-                try {
-                    Typeface t;
-                    if (Build.VERSION.SDK_INT >= 26) {
-                        Typeface.Builder builder = new Typeface.Builder(ApplicationLoader.applicationContext.getAssets(), assetPath);
-                        if (assetPath.contains("medium")) {
-                            builder.setWeight(700);
-                        }
-                        if (assetPath.contains("italic")) {
-                            builder.setItalic(true);
-                        }
-                        t = builder.build();
-                    } else {
-                        t = Typeface.createFromAsset(ApplicationLoader.applicationContext.getAssets(), assetPath);
-                    }
-                    typefaceCache.put(assetPath, t);
-                } catch (Exception e) {
-                    if (BuildVars.LOGS_ENABLED) {
-                        FileLog.e("Could not get typeface '" + assetPath + "' because " + e.getMessage());
-                    }
-                    return null;
+        return typefaceCache.computeIfAbsent(assetPath, path -> {
+            try {
+                if (CloviConfig.useSystemFont) {
+                    return FontHelper.createTypeface(path);
                 }
+                return FontHelper.createTypefaceFromAsset(path);
+            } catch (Exception e) {
+                FileLog.e("Could not get typeface '" + assetPath + "' because " + e.getMessage());
+                return null;
             }
-            return typefaceCache.get(assetPath);
-        }
+        });
     }
 
     public static boolean isWaitingForSms() {
@@ -2886,6 +2875,10 @@ public class AndroidUtilities {
     }
 
     public static boolean isTablet() {
+        if(CloviConfig.disableTabletMode) return false;
+        return isTabletInternal() && !SharedConfig.forceDisableTabletMode;
+    }
+    public static boolean needRealIsTablet(){
         return isTabletInternal() && !SharedConfig.forceDisableTabletMode;
     }
 

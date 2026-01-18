@@ -106,6 +106,8 @@ import org.telegram.ui.Components.spoilers.SpoilersTextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+
 public class FilterCreateActivity extends BaseFragment {
 
     private RecyclerListView listView;
@@ -1437,7 +1439,7 @@ public class FilterCreateActivity extends BaseFragment {
         }
     }
 
-    private class ListAdapter extends AdapterWithDiffUtils {
+    private class ListAdapter extends MD3AdapterWithDiffUtils {
 
         private Context mContext;
 

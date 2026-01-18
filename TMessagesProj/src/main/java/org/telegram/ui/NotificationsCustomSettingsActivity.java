@@ -104,6 +104,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+import art.clovi.ui.MD3ListAdapter;
+
 public class NotificationsCustomSettingsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private RecyclerListView listView;
@@ -1495,6 +1498,13 @@ public class NotificationsCustomSettingsActivity extends BaseFragment implements
             } else {
                 adapter.notifyDataSetChanged();
             }
+
+            listView.post(() -> {
+                RecyclerView.Adapter rvAdapter = listView.getAdapter();
+                if (rvAdapter instanceof MD3ListAdapter md3) {
+                    md3.reapplyVisible();
+                }
+            });
         }
     }
 
@@ -1923,7 +1933,7 @@ public class NotificationsCustomSettingsActivity extends BaseFragment implements
     private final ArrayList<ItemInner> oldItems = new ArrayList<>();
     private final ArrayList<ItemInner> items = new ArrayList<>();
 
-    private class ListAdapter extends AdapterWithDiffUtils {
+    private class ListAdapter extends MD3AdapterWithDiffUtils {
 
         private Context mContext;
 

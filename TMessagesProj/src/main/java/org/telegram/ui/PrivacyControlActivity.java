@@ -101,6 +101,8 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class PrivacyControlActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, ImageUpdater.ImageUpdaterDelegate {
 
     private ListAdapter listAdapter;
@@ -1719,7 +1721,7 @@ public class PrivacyControlActivity extends BaseFragment implements Notification
         return checkDiscard();
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
         private Context mContext;
 
         public ListAdapter(Context context) {

@@ -33,6 +33,8 @@ import org.telegram.ui.Components.RecyclerListView;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+
 public class ArchiveSettingsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private RecyclerListView listView;
@@ -176,7 +178,7 @@ public class ArchiveSettingsActivity extends BaseFragment implements Notificatio
         }
     }
 
-    private class ListAdapter extends AdapterWithDiffUtils {
+    private class ListAdapter extends MD3AdapterWithDiffUtils {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

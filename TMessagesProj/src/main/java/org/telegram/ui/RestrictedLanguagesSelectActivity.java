@@ -55,6 +55,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class RestrictedLanguagesSelectActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private ListAdapter listAdapter;
@@ -393,7 +395,7 @@ public class RestrictedLanguagesSelectActivity extends BaseFragment implements N
         searchListViewAdapter.notifyDataSetChanged();
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
         private boolean search;

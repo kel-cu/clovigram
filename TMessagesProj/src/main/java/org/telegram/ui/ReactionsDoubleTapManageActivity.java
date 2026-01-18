@@ -42,6 +42,8 @@ import org.telegram.ui.Components.SimpleThemeDescription;
 import java.util.ArrayList;
 import java.util.List;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class ReactionsDoubleTapManageActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private LinearLayout contentView;
@@ -86,7 +88,7 @@ public class ReactionsDoubleTapManageActivity extends BaseFragment implements No
         listView = new RecyclerListView(context);
         ((DefaultItemAnimator)listView.getItemAnimator()).setSupportsChangeAnimations(false);
         listView.setLayoutManager(new LinearLayoutManager(context));
-        listView.setAdapter(listAdapter = new RecyclerListView.SelectionAdapter() {
+        listView.setAdapter(listAdapter = new MD3ListAdapter() {
             @Override
             public boolean isEnabled(RecyclerView.ViewHolder holder) {
                 return holder.getItemViewType() == 3 || holder.getItemViewType() == 2;

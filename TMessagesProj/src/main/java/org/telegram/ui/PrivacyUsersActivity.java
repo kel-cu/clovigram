@@ -45,6 +45,8 @@ import org.telegram.ui.Components.RecyclerListView;
 
 import java.util.ArrayList;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class PrivacyUsersActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private RecyclerListView listView;
@@ -386,7 +388,7 @@ public class PrivacyUsersActivity extends BaseFragment implements NotificationCe
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

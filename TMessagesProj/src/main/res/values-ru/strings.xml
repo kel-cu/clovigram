@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Telegram</string>
-    <string name="AppNameBeta">Telegram Beta</string>
+    <string name="AppName">Clovigram</string>
+    <string name="AppNameBeta">Clovigram Beta</string>
     <string name="LanguageName">Русский</string>
     <string name="English">Английский</string>
     <string name="LanguageNameInEnglish">Russian</string>
     <string name="LanguageCode">ru</string>
     <string name="ContinueOnThisLanguage">Продолжить на русском</string>
+    <string name="DisabledBlurAndLiquidAss">Разработчик данного клиента главный хейтер блюра и жидкого стекла. Поэтому я его выключил за вас :)</string>
     <!--signin view-->
     <string name="YourPhone">Ваш телефон</string>
     <string name="StartText">Проверьте код страны и введите свой номер телефона.</string>
@@ -209,7 +210,7 @@
     <string name="CheckYourNewEmailSubtitle">Введите код, который пришёл на указанный Вами адрес %1$s.</string>
     <string name="LoginOrSingInWithGoogle">или</string>
     <!--Intro view-->
-    <string name="Page1Title">Telegram</string>
+    <string name="Page1Title">Clovigram</string>
     <string name="Page2Title">Быстрый</string>
     <string name="Page3Title">Бесплатный</string>
     <string name="Page4Title">Безопасный</string>
@@ -263,4 +264,27 @@
     <string name="RemindTodayAt">\'Отправить сегодня в\' HH:mm</string>
     <string name="RemindDayAt">\'Отправить\' d MMM \'в\' HH:mm</string>
     <string name="RemindDayYearAt">\'Напомнить\' d MMM yyyy \'в\' HH:mm</string>
+    <string name="DeveloperSite">Developer\'s Website</string>
+    <string name="RestartRequired">Restart Required</string>
+    <string name="Preferences">Preferences</string>
+    <string name="CloviSettings">Clovigram Preferences</string>
+    <string name="HidePhoneNumber">Hide Phone Number</string>
+    <string name="ReplaceTitleWithName">Replace Title with your Name</string>
+    <string name="NeedRestartDescription">To apply some settings, you need to restart the application!</string>
+    <string name="NeedRestart">Need Restart!</string>
+    <string name="UseYandexMaps">Use Yandex Maps</string>
+    <string name="NoSupportedAndroidNothing">Your Android version is not supported for working with Glyph Interface</string>
+    <string name="NoNothing">Your smartphone is not supported for working with glyphs. Supported models:\\nNothing Phone (3a)</string>
+    <string name="StartWithBackCamera">Start recording circles from the rear camera</string>
+    <string name="EnableGlyphInterface">Enable Glyph Interface</string>
+    <string name="AllowShowRecordGlyph">Allow the recording indicator to be shown</string>
+    <string name="AllowShowProgressGlyph">Allow the listening indicator to be displayed</string>
+    <string name="HideStories">Hide Stories</string>
+    <string name="DisableTabletMode">Disable Tablet mode</string>
+    <string name="NothingSeries">Your Phone Series</string>
+    <string name="AppIconClovi">Clovi</string>
+    <string name="HideDeveloperSite">Hide Developer\'s Website</string>
+    <string name="UseSystemFont">Use System Fonts</string>
+    <string name="UseSystemEmoji">Use System Emoji</string>
+    <string name="useMD3ListDesign">MD3 List Design</string>
 </resources>

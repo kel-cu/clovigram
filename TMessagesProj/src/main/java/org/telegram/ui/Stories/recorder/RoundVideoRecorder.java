@@ -27,6 +27,9 @@ import org.telegram.ui.Components.Paint.Views.RoundView;
 
 import java.io.File;
 
+import art.clovi.CloviConfig;
+import art.clovi.util.GlyphsUtils;
+
 public class RoundVideoRecorder extends FrameLayout {
 
     public final CameraView cameraView;
@@ -50,7 +53,7 @@ public class RoundVideoRecorder extends FrameLayout {
 
         file = StoryEntry.makeCacheFile(UserConfig.selectedAccount, true);
 
-        cameraView = new CameraView(context, true, false) {
+        cameraView = new CameraView(context, !CloviConfig.startWithBackCamera, false) {
             private final Path circlePath = new Path();
             @Override
             protected void dispatchDraw(Canvas canvas) {
@@ -180,7 +183,6 @@ public class RoundVideoRecorder extends FrameLayout {
 
         if (recordingStarted > 0) {
             float t = Utilities.clamp(sinceRecording() / (float) MAX_DURATION, 1, 0);
-
             progressPaint.setStrokeWidth(dp(3.33f));
             progressPaint.setColor(Theme.multAlpha(0xbeffffff, alpha));
             progressPaint.setShadowLayer(dp(1), 0, dp(.33f), Theme.multAlpha(0x20000000, alpha));
@@ -283,6 +285,7 @@ public class RoundVideoRecorder extends FrameLayout {
     private ValueAnimator destroyAnimator;
     private float destroyT;
     public void destroy(boolean instant) {
+        GlyphsUtils.turnOff();
         if (onDestroyCallback != null) {
             onDestroyCallback.run();
             onDestroyCallback = null;

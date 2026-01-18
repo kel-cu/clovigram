@@ -57,6 +57,8 @@ import org.telegram.ui.Components.ViewPagerFixed;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+
 public class DataUsage2Activity extends BaseFragment {
 
     private Theme.ResourcesProvider resourcesProvider;
@@ -516,7 +518,7 @@ public class DataUsage2Activity extends BaseFragment {
             return string;
         }
 
-        private class Adapter extends AdapterWithDiffUtils {
+        private class Adapter extends MD3AdapterWithDiffUtils {
 
             @NonNull
             @Override

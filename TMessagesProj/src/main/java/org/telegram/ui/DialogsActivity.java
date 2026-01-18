@@ -251,6 +251,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import art.clovi.CloviConfig;
+
 public class DialogsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, FloatingDebugProvider {
 
     public final static boolean DISPLAY_SPEEDOMETER_IN_DOWNLOADS_SEARCH = true;
@@ -700,7 +702,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
         public ContentView(Context context) {
             super(context);
-            needBlur = true;
+            needBlur = false;
             blurBehindViews.add(this);
         }
 
@@ -3353,10 +3355,11 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             } else {
                 statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(null, dp(26));
                 statusDrawable.center = true;
+                TLRPC.User user = getUserConfig().getCurrentUser();
                 if (BuildVars.DEBUG_VERSION) {
-                    actionBar.setTitle(getString(R.string.AppNameBeta), statusDrawable);
+                    actionBar.setTitle((CloviConfig.replaceAppName && user != null) ? ContactsController.formatName(user.first_name, user.last_name) : getString(R.string.AppNameBeta), statusDrawable);
                 } else {
-                    actionBar.setTitle(getString(R.string.AppName), statusDrawable);
+                    actionBar.setTitle((CloviConfig.replaceAppName && user != null) ? ContactsController.formatName(user.first_name, user.last_name) : getString(R.string.AppName), statusDrawable);
                 }
                 updateStatus(UserConfig.getInstance(currentAccount).getCurrentUser(), false);
             }

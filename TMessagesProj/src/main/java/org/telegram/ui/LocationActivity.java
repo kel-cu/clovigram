@@ -129,6 +129,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import art.clovi.CloviConfig;
+
 public class LocationActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private ImageView locationButton;

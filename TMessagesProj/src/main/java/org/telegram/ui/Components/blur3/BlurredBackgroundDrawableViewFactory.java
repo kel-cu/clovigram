@@ -40,10 +40,9 @@ public class BlurredBackgroundDrawableViewFactory {
         this.linkedViews = linkedViews;
     }
 
-    private boolean isLiquidGlassEffectAllowed;
 
     public void setLiquidGlassEffectAllowed(boolean liquidGlassEffectAllowed) {
-        isLiquidGlassEffectAllowed = liquidGlassEffectAllowed;
+//        isLiquidGlassEffectAllowed = liquidGlassEffectAllowed;
     }
 
     public BlurredBackgroundDrawable create(View view) {
@@ -52,11 +51,6 @@ public class BlurredBackgroundDrawableViewFactory {
 
     public BlurredBackgroundDrawable create(View view, BlurredBackgroundColorProvider provider) {
         final BlurredBackgroundDrawable drawable = source.createDrawable();
-        if (isLiquidGlassEffectAllowed && Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (drawable instanceof BlurredBackgroundDrawableRenderNode) {
-                ((BlurredBackgroundDrawableRenderNode) drawable).setLiquidGlassEffectAllowed();
-            }
-        }
 
         drawable.setColorProvider(provider);
 

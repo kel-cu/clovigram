@@ -260,7 +260,7 @@ public class SharedConfig {
     public static Boolean useCamera2Force;
     public static boolean useNewBlur;
     public static boolean useSurfaceInStories;
-    public static boolean photoViewerBlur = true;
+    public static boolean photoViewerBlur = false;
     public static boolean payByInvoice;
     public static int stealthModeSendMessageConfirm = 2;
     private static int lastLocalId = -210000;
@@ -1751,11 +1751,13 @@ public class SharedConfig {
     }
 
     public static boolean canBlurChat() {
-        return getDevicePerformanceClass() >= (Build.VERSION.SDK_INT >= 31 ? PERFORMANCE_CLASS_AVERAGE : PERFORMANCE_CLASS_HIGH) || BuildVars.DEBUG_PRIVATE_VERSION;
+        return false;
+//        return getDevicePerformanceClass() >= (Build.VERSION.SDK_INT >= 31 ? PERFORMANCE_CLASS_AVERAGE : PERFORMANCE_CLASS_HIGH) || BuildVars.DEBUG_PRIVATE_VERSION;
     }
 
     public static boolean chatBlurEnabled() {
-        return canBlurChat() && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
+        return false;
+//        return canBlurChat() && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
     }
 
     public static class BackgroundActivityPrefs {

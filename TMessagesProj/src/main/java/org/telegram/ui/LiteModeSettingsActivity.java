@@ -70,6 +70,8 @@ import org.telegram.ui.Components.ThanosEffect;
 
 import java.util.ArrayList;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+
 public class LiteModeSettingsActivity extends BaseFragment {
 
     FrameLayout contentView;
@@ -255,12 +257,13 @@ public class LiteModeSettingsActivity extends BaseFragment {
                 items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsTopics"), LiteMode.FLAG_CHAT_FORUM_TWOCOLUMN));
             }
             items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsSpoiler"), LiteMode.FLAG_CHAT_SPOILER));
-            if (SharedConfig.getDevicePerformanceClass() >= SharedConfig.PERFORMANCE_CLASS_AVERAGE || BuildVars.DEBUG_PRIVATE_VERSION) {
-                items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsBlur2"), LiteMode.FLAG_CHAT_BLUR));
-            }
-            if (Build.VERSION.SDK_INT >= 33 && (SharedConfig.getDevicePerformanceClass() >= SharedConfig.PERFORMANCE_CLASS_AVERAGE || BuildVars.DEBUG_PRIVATE_VERSION)) {
-                items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsLiquidGlass"), LiteMode.FLAG_LIQUID_GLASS));
-            }
+            items.add(Item.asInfo(LocaleController.getString("DisabledBlurAndLiquidAss")));
+//            if (SharedConfig.getDevicePerformanceClass() >= SharedConfig.PERFORMANCE_CLASS_AVERAGE || BuildVars.DEBUG_PRIVATE_VERSION) {
+//                items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsBlur2"), LiteMode.FLAG_CHAT_BLUR));
+//            }
+//            if (Build.VERSION.SDK_INT >= 33 && (SharedConfig.getDevicePerformanceClass() >= SharedConfig.PERFORMANCE_CLASS_AVERAGE || BuildVars.DEBUG_PRIVATE_VERSION)) {
+//                items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsLiquidGlass"), LiteMode.FLAG_LIQUID_GLASS));
+//            }
             items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsScale"), LiteMode.FLAG_CHAT_SCALE));
             if (ThanosEffect.supports()) {
                 items.add(Item.asCheckbox(LocaleController.getString("LiteOptionsThanos"), LiteMode.FLAG_CHAT_THANOS));
@@ -333,7 +336,7 @@ public class LiteModeSettingsActivity extends BaseFragment {
 
     public static final int SWITCH_TYPE_SMOOTH_TRANSITIONS = 1;
 
-    private class Adapter extends AdapterWithDiffUtils {
+    private class Adapter extends MD3AdapterWithDiffUtils {
 
         @NonNull
         @Override

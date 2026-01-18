@@ -53,6 +53,8 @@ import org.telegram.ui.Components.SlideChooseView;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class DataAutoDownloadActivity extends BaseFragment {
 
     private ListAdapter listAdapter;
@@ -186,7 +188,7 @@ public class DataAutoDownloadActivity extends BaseFragment {
                     typePreset.enabled = !typePreset.enabled;
                 }
                 view.setTag(typePreset.enabled ? Theme.key_windowBackgroundChecked : Theme.key_windowBackgroundUnchecked);
-                cell.setBackgroundColorAnimated(!checked, Theme.getColor(typePreset.enabled ? Theme.key_windowBackgroundChecked : Theme.key_windowBackgroundUnchecked));
+                if (!MD3ListAdapter.isMd3ContainersEnabled()) cell.setBackgroundColorAnimated(!checked, Theme.getColor(typePreset.enabled ? Theme.key_windowBackgroundChecked : Theme.key_windowBackgroundUnchecked));
                 updateRows();
                 if (typePreset.enabled) {
                     listAdapter.notifyItemRangeInserted(autoDownloadSectionRow + 1, 9);
@@ -209,6 +211,14 @@ public class DataAutoDownloadActivity extends BaseFragment {
                 cell.setChecked(!checked);
                 DownloadController.getInstance(currentAccount).checkAutodownloadSettings();
                 wereAnyChanges = true;
+                if (listView != null) {
+                    listView.post(() -> {
+                        RecyclerView.Adapter adapter = listView.getAdapter();
+                        if (adapter instanceof MD3ListAdapter md3) {
+                            md3.reapplyVisible();
+                        }
+                    });
+                }
             } else if (position == photosRow || position == videosRow || position == filesRow || position == storiesRow) {
                 if (!view.isEnabled()) {
                     return;
@@ -644,7 +654,7 @@ public class DataAutoDownloadActivity extends BaseFragment {
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 
@@ -666,7 +676,7 @@ public class DataAutoDownloadActivity extends BaseFragment {
                         view.setDrawCheckRipple(true);
                         view.setTextAndCheck(LocaleController.getString(R.string.AutoDownloadMedia), typePreset.enabled, false);
                         view.setTag(typePreset.enabled ? Theme.key_windowBackgroundChecked : Theme.key_windowBackgroundUnchecked);
-                        view.setBackgroundColor(Theme.getColor(typePreset.enabled ? Theme.key_windowBackgroundChecked : Theme.key_windowBackgroundUnchecked));
+                        view.setBackgroundColor(Theme.getColor(typePreset.enabled || MD3ListAdapter.isMd3ContainersEnabled() ? Theme.key_windowBackgroundChecked : Theme.key_windowBackgroundUnchecked));
                     }
                     break;
                 }

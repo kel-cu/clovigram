@@ -1840,7 +1840,7 @@ public class CameraView extends FrameLayout implements TextureView.SurfaceTextur
             egl10.eglSwapBuffers(eglDisplay, eglSurface);
 
             if (blurSurfaceTexture != null && blurInited) {
-                boolean drawBlur = true;
+                boolean drawBlur = false;
                 if (!eglBlurContext.equals(egl10.eglGetCurrentContext()) || !eglBlurSurface.equals(egl10.eglGetCurrentSurface(EGL10.EGL_DRAW))) {
                     if (!egl10.eglMakeCurrent(eglDisplay, eglBlurSurface, eglBlurSurface, eglBlurContext)) {
                         if (BuildVars.LOGS_ENABLED) {

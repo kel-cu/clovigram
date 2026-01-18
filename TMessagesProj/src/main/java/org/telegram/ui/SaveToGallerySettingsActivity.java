@@ -59,6 +59,8 @@ import org.telegram.ui.Components.SeekBarView;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+
 public class SaveToGallerySettingsActivity extends BaseFragment {
 
     int type;
@@ -334,7 +336,7 @@ public class SaveToGallerySettingsActivity extends BaseFragment {
         }
     }
 
-    private class Adapter extends AdapterWithDiffUtils {
+    private class Adapter extends MD3AdapterWithDiffUtils {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

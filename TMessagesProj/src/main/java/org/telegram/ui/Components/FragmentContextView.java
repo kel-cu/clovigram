@@ -98,6 +98,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 
+import art.clovi.util.GlyphsUtils;
 import me.vkryl.android.animator.ListAnimator;
 import me.vkryl.android.animator.ReplaceAnimator;
 import me.vkryl.core.lambda.Destroyable;
@@ -1801,6 +1802,7 @@ public class FragmentContextView extends FrameLayout implements NotificationCent
                 return;
             }
             if (visible) {
+                GlyphsUtils.turnOff();
                 if (playbackSpeedButton != null && playbackSpeedButton.isSubMenuShowing()) {
                     playbackSpeedButton.toggleSubMenu();
                 }
@@ -1924,6 +1926,9 @@ public class FragmentContextView extends FrameLayout implements NotificationCent
                 playPauseDrawable.setPause(true, !create);
                 playButton.setContentDescription(getString(R.string.AccActionPause));
             }
+//            if(messageObject.isVoice() || messageObject.isRoundVideo() || messageObject.isMusic()){
+//                GlyphsUtils.sendRoundVideo(messageObject.audioProgress);
+//            }
             if (lastMessageObject != messageObject || prevStyle != STYLE_AUDIO_PLAYER) {
                 lastMessageObject = messageObject;
                 SpannableStringBuilder stringBuilder;
@@ -1935,7 +1940,6 @@ public class FragmentContextView extends FrameLayout implements NotificationCent
                     }
                     titleTextView.setPadding(0, 0, dp(44) + joinButtonWidth, 0);
                     stringBuilder = new SpannableStringBuilder(String.format("%s %s", messageObject.getMusicAuthor(), messageObject.getMusicTitle()));
-
                     for (int i = 0; i < 2; i++) {
                         TextView textView = i == 0 ? titleTextView.getTextView() : titleTextView.getNextTextView();
                         if (textView == null) {

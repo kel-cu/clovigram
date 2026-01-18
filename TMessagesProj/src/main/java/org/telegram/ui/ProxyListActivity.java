@@ -69,6 +69,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class ProxyListActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
     private final static boolean IS_PROXY_ROTATION_AVAILABLE = true;
     private static final int MENU_DELETE = 0;
@@ -815,7 +817,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
         private final static int VIEW_TYPE_SHADOW = 0,
             VIEW_TYPE_TEXT_SETTING = 1,
             VIEW_TYPE_HEADER = 2,

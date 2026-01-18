@@ -75,6 +75,8 @@ import org.telegram.ui.bots.BotBiometrySettings;
 
 import java.util.ArrayList;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class PrivacySettingsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private ListAdapter listAdapter;
@@ -976,7 +978,7 @@ public class PrivacySettingsActivity extends BaseFragment implements Notificatio
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

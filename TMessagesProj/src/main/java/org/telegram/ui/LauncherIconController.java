@@ -40,6 +40,7 @@ public class LauncherIconController {
         PREMIUM("PremiumIcon", R.drawable.icon_3_background_sa, R.mipmap.icon_3_foreground_sa, R.string.AppIconPremium, true),
         TURBO("TurboIcon", R.drawable.icon_5_background_sa, R.mipmap.icon_5_foreground_sa, R.string.AppIconTurbo, true),
         NOX("NoxIcon", R.mipmap.icon_2_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconNox, true);
+//        CLOVI("CloviIcon", R.mipmap.icon_7_background_sa, R.mipmap.icon_7_foreground_sa, R.string.AppIconClovi, true);
 
         public final String key;
         public final int background;

@@ -93,6 +93,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class PasscodeActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
     public final static int TYPE_MANAGE_CODE_SETTINGS = 0,
             TYPE_SETUP_CODE = 1,
@@ -1114,7 +1116,7 @@ public class PasscodeActivity extends BaseFragment implements NotificationCenter
         }, isPinCode() ? 150 : 1000));
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
         private final static int VIEW_TYPE_CHECK = 0,
                 VIEW_TYPE_SETTING = 1,
                 VIEW_TYPE_INFO = 2,

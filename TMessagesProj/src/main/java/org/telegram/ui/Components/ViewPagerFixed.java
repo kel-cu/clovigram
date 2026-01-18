@@ -1562,9 +1562,9 @@ public class ViewPagerFixed extends FrameLayout {
             deletePaint.setStrokeWidth(dp(1.5f));
 
             selectorDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, null);
-            float rad = AndroidUtilities.dpf2(3);
-            selectorDrawable.setCornerRadii(new float[]{rad, rad, rad, rad, 0, 0, 0, 0});
-            selectorDrawable.setColor(Theme.getColor(tabLineColorKey, resourcesProvider));
+            float rad = AndroidUtilities.dpf2(30);
+            selectorDrawable.setCornerRadii(new float[]{rad, rad, rad, rad, rad, rad, rad, rad});
+            selectorDrawable.setColor(ColorUtils.setAlphaComponent(Theme.getColor(tabLineColorKey, resourcesProvider), 0x2F));
 
             setHorizontalScrollBarEnabled(false);
             listView = new RecyclerListView(context) {
@@ -1608,13 +1608,11 @@ public class ViewPagerFixed extends FrameLayout {
                 ((DefaultItemAnimator) listView.getItemAnimator()).setDelayAnimations(false);
             }
 
-            listView.setSelectorType(tabsSelectorType);
-            if (tabsSelectorType == 3) {
-                listView.setSelectorRadius(0);
-            } else {
+            listView.setSelectorType(100);
+            if (tabsSelectorType < 3) {
                 listView.setSelectorRadius(6);
-            }
-            listView.setSelectorDrawableColor(Theme.getColor(selectorColorKey, resourcesProvider));
+            } else listView.setSelectorRadius(0);
+            listView.setSelectorDrawableColor(0x00);
             listView.setLayoutManager(layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false) {
                 @Override
                 public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state, int position) {
@@ -1988,7 +1986,11 @@ public class ViewPagerFixed extends FrameLayout {
                             indicatorX = (int) AndroidUtilities.lerp(lastDrawnIndicatorX, indicatorX, indicatorProgress2);
                             indicatorWidth = (int) AndroidUtilities.lerp(lastDrawnIndicatorW, indicatorWidth, indicatorProgress2);
                         }
-                        selectorDrawable.setBounds(indicatorX, (int) (height - AndroidUtilities.dpr(4) + hideProgress * AndroidUtilities.dpr(4)), indicatorX + indicatorWidth, (int) (height + hideProgress * AndroidUtilities.dpr(4)));
+                        selectorDrawable.setBounds(
+                                indicatorX - (AndroidUtilities.dp(12)),
+                                (int) (height / 2 - AndroidUtilities.dp(18) * (1f - hideProgress)),
+                                indicatorX + indicatorWidth + (AndroidUtilities.dp(12)),
+                                (int) (height / 2 + AndroidUtilities.dp(18) * (1f - hideProgress)));
                         selectorDrawable.draw(canvas);
                     }
                 }
@@ -2019,7 +2021,7 @@ public class ViewPagerFixed extends FrameLayout {
         }
 
         public void updateColors() {
-            selectorDrawable.setColor(Theme.getColor(tabLineColorKey, resourcesProvider));
+            selectorDrawable.setColor(ColorUtils.setAlphaComponent(Theme.getColor(tabLineColorKey, resourcesProvider), 0x2F));
             listView.invalidateViews();
             listView.invalidate();
             invalidate();

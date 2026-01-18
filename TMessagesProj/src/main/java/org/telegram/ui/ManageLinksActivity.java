@@ -88,6 +88,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class ManageLinksActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private ListAdapter listViewAdapter;
@@ -530,6 +532,14 @@ public class ManageLinksActivity extends BaseFragment implements NotificationCen
         if (listViewAdapter != null && notify) {
             listViewAdapter.notifyDataSetChanged();
         }
+        if (listView != null) {
+            listView.post(() -> {
+                RecyclerView.Adapter adapter = listView.getAdapter();
+                if (adapter instanceof MD3ListAdapter md3) {
+                    md3.reapplyVisible();
+                }
+            });
+        }
     }
 
     @Override
@@ -722,7 +732,7 @@ public class ManageLinksActivity extends BaseFragment implements NotificationCen
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

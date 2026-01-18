@@ -50,6 +50,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import art.clovi.CloviConfig;
+
 public class ApplicationLoader extends Application {
 
     public static ApplicationLoader applicationLoaderInstance;
@@ -151,7 +153,7 @@ public class ApplicationLoader extends Application {
     }
 
     protected boolean isBeta() {
-        return false;
+        return BuildConfig.BUILD_TYPE.contains("debug");
     }
 
     protected boolean isAndroidTestEnv() {

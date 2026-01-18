@@ -125,6 +125,8 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
+import art.clovi.util.GlyphsUtils;
+
 public class MediaController implements AudioManager.OnAudioFocusChangeListener, NotificationCenter.NotificationCenterDelegate, SensorEventListener {
 
     private native int startRecord(String path, int sampleRate);
@@ -1537,6 +1539,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                                         }
                                         bufferedValue = videoPlayer.getBufferedPosition() / (float) duration;
                                         value = progress / (float) duration;
+                                        GlyphsUtils.sendRoundVideo(value, false);
                                         if (value >= 1) {
                                             return;
                                         }
@@ -1544,6 +1547,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                                         duration = audioPlayer.getDuration();
                                         progress = audioPlayer.getCurrentPosition();
                                         value = duration >= 0 ? (progress / (float) duration) : 0.0f;
+                                        GlyphsUtils.sendRoundVideo(value, false);
                                         bufferedValue = audioPlayer.getBufferedPosition() / (float) duration;
                                         if (duration == C.TIME_UNSET || progress < 0 || seekToProgressPending != 0) {
                                             return;
@@ -1579,6 +1583,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
             if (progressTimer != null) {
                 try {
                     progressTimer.cancel();
+                    GlyphsUtils.turnOff();
                     progressTimer = null;
                 } catch (Exception e) {
                     FileLog.e(e);

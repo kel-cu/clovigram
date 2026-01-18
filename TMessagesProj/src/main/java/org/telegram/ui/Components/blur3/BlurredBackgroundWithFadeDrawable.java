@@ -58,22 +58,22 @@ public class BlurredBackgroundWithFadeDrawable extends Drawable {
             return;
         }
 
-        BlurredBackgroundSource source = drawable.getUnwrappedSource();
-        if (source instanceof BlurredBackgroundSourceColor) {
-            // fast way - just draw gradient
-
-            final int color = ((BlurredBackgroundSourceColor) source).getColor();
-            if (colorStaticLast != color || colorStaticPaint.getShader() == null) {
-                colorStaticLast = color;
-                colorStaticPaint.setShader(createGradient(color, fadeHeight, opacity));
-            }
-
-            canvas.save();
-            canvas.translate(bounds.left, bounds.top);
-            canvas.drawRect(0, 0, bounds.width(), bounds.height(), colorStaticPaint);
-            canvas.restore();
-            return;
-        }
+//        BlurredBackgroundSource source = drawable.getUnwrappedSource();
+//        if (source instanceof BlurredBackgroundSourceColor) {3
+//            // fast way - just draw gradient
+//
+//            final int color = ((BlurredBackgroundSourceColor) source).getColor();
+//            if (colorStaticLast != color || colorStaticPaint.getShader() == null) {
+//                colorStaticLast = color;
+//                colorStaticPaint.setShader(createGradient(color, fadeHeight, opacity));
+//            }
+//
+//            canvas.save();
+//            canvas.translate(bounds.left, bounds.top);
+//            canvas.drawRect(0, 0, bounds.width(), bounds.height(), colorStaticPaint);
+//            canvas.restore();
+//            return;
+//        }
         colorStaticPaint.setShader(null);
 
         final int save = canvas.saveLayer(bounds.left, bounds.top, bounds.right, bounds.bottom, null);

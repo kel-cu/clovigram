@@ -65,6 +65,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Timer;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class LanguageSelectActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private ListAdapter listAdapter;
@@ -579,7 +581,7 @@ public class LanguageSelectActivity extends BaseFragment implements Notification
     public static final int VIEW_TYPE_SETTINGS_2 = 5;
     public static final int VIEW_TYPE_INFO = 6;
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
         private boolean search;

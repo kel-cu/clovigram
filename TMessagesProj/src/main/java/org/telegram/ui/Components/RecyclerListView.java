@@ -73,6 +73,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 
+import art.clovi.ui.MD3ListAdapter;
+
 @SuppressWarnings("JavaReflectionMemberAccess")
 public class RecyclerListView extends RecyclerView {
     public final static int SECTIONS_TYPE_SIMPLE = 0,
@@ -1485,12 +1487,22 @@ public class RecyclerListView extends RecyclerView {
 
     private Paint backgroundPaint;
     protected void drawSectionBackground(Canvas canvas, int fromAdapterPosition, int toAdapterPosition, int color) {
-        drawSectionBackground(canvas, fromAdapterPosition, toAdapterPosition, color, 0, 0);
+        drawSectionBackground(canvas, fromAdapterPosition, toAdapterPosition, color, 0, 0, false);
     }
+
+    protected void drawSectionBackground(Canvas canvas, int fromAdapterPosition, int toAdapterPosition, int color, boolean keepMd3Design) {
+        drawSectionBackground(canvas, fromAdapterPosition, toAdapterPosition, color, 0, 0, keepMd3Design);
+    }
+
     protected void drawSectionBackground(Canvas canvas, int fromAdapterPosition, int toAdapterPosition, int color, int topMargin, int bottomMargin) {
+        drawSectionBackground(canvas, fromAdapterPosition, toAdapterPosition, color, topMargin, bottomMargin, false);
+    }
+    protected void drawSectionBackground(Canvas canvas, int fromAdapterPosition, int toAdapterPosition, int color, int topMargin, int bottomMargin, boolean keepMd3Design) {
         if (toAdapterPosition < fromAdapterPosition || fromAdapterPosition < 0 || toAdapterPosition < 0) {
             return;
         }
+
+        keepMd3Design = true; // forcing this value can cause many errors - keep it as a debug choice ^K
 
         int top = Integer.MAX_VALUE;
         int bottom = Integer.MIN_VALUE;
@@ -1513,11 +1525,31 @@ public class RecyclerListView extends RecyclerView {
                 backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             }
             backgroundPaint.setColor(color);
-            canvas.drawRect(0, top - topMargin, getWidth(), bottom + bottomMargin, backgroundPaint);
+            if (keepMd3Design && MD3ListAdapter.canTryToIgnoreTopBarBackground()) {
+                int padding = MD3ListAdapter.config.sidePaddingDp;
+                float cornerRadius = AndroidUtilities.dp(MD3ListAdapter.config.cornerRadiusDp);
+
+                canvas.drawRoundRect(
+                        AndroidUtilities.dp(padding),
+                        top - topMargin,
+                        getWidth() - AndroidUtilities.dp(padding) * 2,
+                        bottom + bottomMargin,
+                        cornerRadius,
+                        cornerRadius,
+                        backgroundPaint
+                );
+            } else {
+                canvas.drawRect(0, top - topMargin, getWidth(), bottom + bottomMargin, backgroundPaint);
+            }
         }
     }
 
     protected void drawSectionBackgroundExclusive(Canvas canvas, int fromAdapterPositionExclusive, int toAdapterPositionExclusive, int color) {
+        drawSectionBackgroundExclusive(canvas, fromAdapterPositionExclusive, toAdapterPositionExclusive, color, false);
+    }
+
+    protected void drawSectionBackgroundExclusive(Canvas canvas, int fromAdapterPositionExclusive, int toAdapterPositionExclusive, int color, boolean keepMd3Design) {
+        keepMd3Design = true; // forcing this value can cause many errors - keep it as a debug choice ^K
         int top = Integer.MAX_VALUE;
         int bottom = Integer.MIN_VALUE;
 
@@ -1544,7 +1576,22 @@ public class RecyclerListView extends RecyclerView {
                 backgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             }
             backgroundPaint.setColor(color);
-            canvas.drawRect(0, top, getWidth(), bottom, backgroundPaint);
+            if (keepMd3Design && MD3ListAdapter.canTryToIgnoreTopBarBackground()) {
+                int padding = MD3ListAdapter.config.sidePaddingDp;
+                float cornerRadius = AndroidUtilities.dp(MD3ListAdapter.config.cornerRadiusDp);
+
+                canvas.drawRoundRect(
+                        AndroidUtilities.dp(padding),
+                        top,
+                        getWidth() - AndroidUtilities.dp(padding) * 2,
+                        bottom,
+                        cornerRadius,
+                        cornerRadius,
+                        backgroundPaint
+                );
+            } else {
+                canvas.drawRect(0, top, getWidth(), bottom, backgroundPaint);
+            }
         }
     }
 
@@ -2591,7 +2638,7 @@ public class RecyclerListView extends RecyclerView {
             canvas.restore();
         }
         super.dispatchDraw(canvas);
-        if (drawSelection && !drawSelectorBehind && !selectorRect.isEmpty() && selectorDrawable != null) {
+        if (useLegacySelector && drawSelection && !drawSelectorBehind && !selectorRect.isEmpty() && selectorDrawable != null) {
             if ((translateSelector == -2 || translateSelector == selectorPosition) && selectorView != null) {
                 int bottomPadding;
                 if (getAdapter() instanceof SelectionAdapter) {
@@ -2995,5 +3042,10 @@ public class RecyclerListView extends RecyclerView {
 
     public void setDrawSelection(boolean drawSelection) {
         this.drawSelection = drawSelection;
+    }
+
+    private boolean useLegacySelector = true;
+    public void setUseLegacySelector(boolean value) {
+        useLegacySelector = value;
     }
 }

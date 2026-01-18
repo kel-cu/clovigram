@@ -248,7 +248,7 @@ public class ActionBarMenuSlider extends FrameLayout {
     }
 
     public void setDrawBlur(boolean draw) {
-        drawBlur = draw;
+        drawBlur = false;
         invalidate();
     }
 
@@ -259,36 +259,36 @@ public class ActionBarMenuSlider extends FrameLayout {
 
     private boolean preparingBlur = false;
     private Runnable prepareBlur = () -> {
-        preparingBlur = true;
-        AndroidUtilities.makeGlobalBlurBitmap(bitmap -> {
-            preparingBlur = false;
-            blurBitmapShader = new BitmapShader(blurBitmap = bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-            if (blurBitmapMatrix == null) {
-                blurBitmapMatrix = new Matrix();
-            } else {
-                blurBitmapMatrix.reset();
-            }
-            blurBitmapMatrix.postScale(BLUR_RADIUS, BLUR_RADIUS);
-            blurBitmapMatrix.postTranslate(-location[0], -location[1]);
-            blurBitmapShader.setLocalMatrix(blurBitmapMatrix);
-            blurPaint.setShader(blurBitmapShader);
-            ColorMatrix colorMatrix = new ColorMatrix();
-            AndroidUtilities.adjustSaturationColorMatrix(colorMatrix, -.2f);
-            blurPaint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
-            invalidate();
-        }, BLUR_RADIUS);
+//        preparingBlur = true;
+//        AndroidUtilities.makeGlobalBlurBitmap(bitmap -> {
+//            preparingBlur = false;
+//            blurBitmapShader = new BitmapShader(blurBitmap = bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+//            if (blurBitmapMatrix == null) {
+//                blurBitmapMatrix = new Matrix();
+//            } else {
+//                blurBitmapMatrix.reset();
+//            }
+//            blurBitmapMatrix.postScale(BLUR_RADIUS, BLUR_RADIUS);
+//            blurBitmapMatrix.postTranslate(-location[0], -location[1]);
+//            blurBitmapShader.setLocalMatrix(blurBitmapMatrix);
+//            blurPaint.setShader(blurBitmapShader);
+//            ColorMatrix colorMatrix = new ColorMatrix();
+//            AndroidUtilities.adjustSaturationColorMatrix(colorMatrix, -.2f);
+//            blurPaint.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
+//            invalidate();
+//        }, BLUR_RADIUS);
     };
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(drawShadow ? MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec) + getPaddingRight() + getPaddingLeft(), MeasureSpec.EXACTLY) : widthMeasureSpec, MeasureSpec.makeMeasureSpec(dp(44) + getPaddingTop() + getPaddingBottom(), MeasureSpec.EXACTLY));
 
-        final boolean canDoBlur = SharedConfig.getDevicePerformanceClass() >= SharedConfig.PERFORMANCE_CLASS_HIGH && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
-        if (drawBlur && blurBitmap == null && !preparingBlur && canDoBlur) {
-            this.prepareBlur.run();
-//            removeCallbacks(this.prepareBlur);
-//            post(this.prepareBlur);
-        }
+//        final boolean canDoBlur = SharedConfig.getDevicePerformanceClass() >= SharedConfig.PERFORMANCE_CLASS_HIGH && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
+//        if (drawBlur && blurBitmap == null && !preparingBlur && canDoBlur) {
+//            this.prepareBlur.run();
+////            removeCallbacks(this.prepareBlur);
+////            post(this.prepareBlur);
+//        }
     }
 
     public void invalidateBlur() {

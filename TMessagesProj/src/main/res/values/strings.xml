@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Telegram</string>
-    <string name="AppNameBeta">Telegram Beta</string>
+    <string name="AppName">Clovigram</string>
+    <string name="AppNameBeta">Clovigram Beta</string>
     <string name="LanguageName">English</string>
     <string name="English">English</string>
     <string name="LanguageNameInEnglish">English</string>
     <string name="LanguageCode">en</string>
     <string name="ContinueOnThisLanguage">Continue in English</string>
+    <string name="DisabledBlurAndLiquidAss">The developer of this client is the main hater of bluer and liquid glass. That\'s why I turned it off for you :)</string>
     <!--signin view-->
     <string name="YourPhone">Your Phone</string>
     <string name="StartText">Please confirm your country code and enter your phone number.</string>
@@ -1471,7 +1472,7 @@
     <string name="URL">URL</string>
     <string name="MapPreviewProvider">Map Preview Provider</string>
     <string name="MapPreviewProviderTitle">Map preview provider</string>
-    <string name="MapPreviewProviderTelegram">Telegram</string>
+    <string name="MapPreviewProviderTelegram">Clovigram</string>
     <string name="MapPreviewProviderGoogle">Google</string>
     <string name="MapPreviewProviderYandex">Yandex</string>
     <string name="MapPreviewProviderNobody">No previews</string>
@@ -1697,8 +1698,8 @@
     <string name="NotificationGroupFew">%1$s sent %3$s to the group %2$s</string>
     <string name="NotificationGroupAlbum">%1$s sent an album to the group %2$s</string>
     <string name="NotificationGroupForwardedFew">%1$s forwarded %3$s to the group %2$s</string>
-    <string name="NotificationHiddenName">Telegram</string>
-    <string name="NotificationHiddenChatName">Telegram</string>
+    <string name="NotificationHiddenName">Clovigram</string>
+    <string name="NotificationHiddenChatName">Clovigram</string>
     <string name="NotificationHiddenChatUserName">User</string>
     <string name="NotificationHiddenMessage">New message</string>
     <string name="Reply">Reply</string>
@@ -1768,7 +1769,7 @@
     <string name="NotificationActionMissedCallConference">You missed a call from %1$s</string>
     <string name="NotificationActionMissedCallConferenceOther_one">You missed a call from %2$s and %1$d other</string>
     <string name="NotificationActionMissedCallConferenceOther_other">You missed a call from %2$s and %1$d others</string>
-    <string name="SecretChatName">Telegram</string>
+    <string name="SecretChatName">Clovigram</string>
     <!--contacts view-->
     <string name="SelectContact">Select Contact</string>
     <string name="ShareContactTitle">Share Contact</string>
@@ -2646,7 +2647,7 @@
     <string name="QRCodePermissionNoCameraWithHint">**Telegram** needs camera access so that you can scan QR codes. Tap Settings -> Permissions, and turn **Camera** on.</string>
     <string name="SetProfilePhoto">Set Profile Photo</string>
     <string name="AppUpdate">Update Telegram</string>
-    <string name="AppUpdateBeta">Update Telegram Beta</string>
+    <string name="AppUpdateBeta">Update Clovigram Beta</string>
     <string name="AppUpdateVersionAndSize">Version %1$s • %2$s</string>
     <string name="AppBetaUpdateVersion">Version %1$s (%2$s)</string>
     <string name="AppUpdateDownloading">Downloading %1$d%%...</string>
@@ -4040,7 +4041,7 @@
     <string name="ViewMessageStatistic">Message Statistic</string>
     <string name="ViewMessage">Open Message</string>
     <!--Intro view-->
-    <string name="Page1Title">Telegram</string>
+    <string name="Page1Title">Clovigram</string>
     <string name="Page2Title">Fast</string>
     <string name="Page3Title">Free</string>
     <string name="Page4Title">Secure</string>
@@ -6029,7 +6030,7 @@
     <string name="LiteOptionsTopics">Side menu in topics</string>
     <string name="LiteOptionsSpoiler">Animated spoiler effect</string>
     <string name="LiteOptionsBlur2">Blur</string>
-    <string name="LiteOptionsLiquidGlass">Liquid Glass</string>
+    <string name="LiteOptionsLiquidGlass">Liquid Ass</string>
     <string name="LiteOptionsScale">Zoom animations</string>
     <string name="LiteOptionsThanos">Dust-effect deletion</string>
     <string name="LiteOptionsCalls">Animations in Calls</string>
@@ -9161,7 +9162,7 @@
     <string name="Gift2CollectionNumberBy_one">Collectible #%1$d by **%2$s**</string>
     <string name="Gift2CollectionNumberBy_other">Collectible #%1$d by **%2$s**</string>
     <string name="Gift2Owner">Owner</string>
-    <string name="Gift2Host">Telegram</string>
+    <string name="Gift2Host">Clovigram</string>
     <string name="Gift2HostAddress">Owner</string>
     <string name="Gift2CantDoTitle">Action Locked</string>
     <string name="Gift2CantDoText">Transfer this gift to your Telegram account on Fragment to unlock this action.</string>
@@ -10192,4 +10193,28 @@
     <string name="GiftAuctionWearInfo2Text">Your profile page will get the color and the symbol of this item.</string>
     <string name="GiftAuctionWearInfo3Header">Proof of Ownership</string>
     <string name="GiftAuctionWearInfo3Text">Tapping the icon of this item next to your name will show its info and owner.</string>
+    <string name="InstallYandexMaps">Install Yandex Maps?</string>
+    <string name="DeveloperSite">Developer\'s Website</string>
+    <string name="RestartRequired">Restart Required</string>
+    <string name="Preferences">Preferences</string>
+    <string name="CloviSettings">Clovigram Preferences</string>
+    <string name="HidePhoneNumber">Hide Phone Number</string>
+    <string name="ReplaceTitleWithName">Replace Title with your Name</string>
+    <string name="NeedRestartDescription">To apply some settings, you need to restart the application!</string>
+    <string name="NeedRestart">Need Restart!</string>
+    <string name="UseYandexMaps">Use Yandex Maps</string>
+    <string name="NoSupportedAndroidNothing">Your Android version is not supported for working with Glyph Interface</string>
+    <string name="NoNothing">Your smartphone is not supported for working with glyphs. Supported models:\\nNothing Phone (3a)</string>
+    <string name="StartWithBackCamera">Start recording circles from the rear camera</string>
+    <string name="EnableGlyphInterface">Enable Glyph Interface</string>
+    <string name="AllowShowRecordGlyph">Allow the recording indicator to be shown</string>
+    <string name="AllowShowProgressGlyph">Allow the listening indicator to be displayed</string>
+    <string name="HideStories">Hide Stories</string>
+    <string name="DisableTabletMode">Disable Tablet mode</string>
+    <string name="NothingSeries">Your Phone Series</string>
+    <string name="AppIconClovi">Clovi</string>
+    <string name="HideDeveloperSite">Hide Developer\'s Website</string>
+    <string name="UseSystemFont">Use System Fonts</string>
+    <string name="UseSystemEmoji">Use System Emoji</string>
+    <string name="useMD3ListDesign">MD3 List Design</string>
 </resources>

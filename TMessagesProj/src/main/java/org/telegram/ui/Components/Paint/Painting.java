@@ -661,6 +661,7 @@ public class Painting {
     }
 
     private Slice registerUndo(RectF rect, boolean blurTex) {
+
         if (rect == null) {
             return null;
         }

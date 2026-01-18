@@ -80,6 +80,8 @@ import org.telegram.ui.Components.voip.CellFlickerDrawable;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class SessionsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     public static final int TYPE_DEVICES = 0;
@@ -721,6 +723,16 @@ public class SessionsActivity extends BaseFragment implements NotificationCenter
             ttlRow = rowCount++;
             ttlDivideRow = rowCount++;
         }
+        if (listView != null) {
+            AndroidUtilities.runOnUIThread(()-> {
+                listView.post(() -> {
+                    RecyclerView.Adapter adapter = listView.getAdapter();
+                    if (adapter instanceof MD3ListAdapter md3) {
+                        md3.reapplyVisible();
+                    }
+                });
+            }, 200);
+        }
     }
 
     private final int VIEW_TYPE_TEXT = 0;
@@ -730,7 +742,7 @@ public class SessionsActivity extends BaseFragment implements NotificationCenter
     private final int VIEW_TYPE_SCANQR = 5;
     private final int VIEW_TYPE_SETTINGS = 6;
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

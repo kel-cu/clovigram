@@ -90,7 +90,7 @@ public class StarParticlesView extends View {
         drawable.type = 100;
         drawable.roundEffect = true;
         drawable.useRotate = true;
-        drawable.useBlur = true;
+        drawable.useBlur = false;
         drawable.checkBounds = true;
         drawable.size1 = 4;
         drawable.k1 = drawable.k2 = drawable.k3 = 0.98f;

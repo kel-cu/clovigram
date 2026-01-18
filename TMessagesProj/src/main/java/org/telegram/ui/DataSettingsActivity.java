@@ -60,6 +60,8 @@ import org.telegram.ui.Components.voip.VoIPHelper;
 import java.io.File;
 import java.util.ArrayList;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class DataSettingsActivity extends BaseFragment {
 
     private ListAdapter listAdapter;
@@ -623,7 +625,7 @@ public class DataSettingsActivity extends BaseFragment {
         updateRows(false);
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

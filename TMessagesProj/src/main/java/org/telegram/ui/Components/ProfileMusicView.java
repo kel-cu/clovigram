@@ -33,6 +33,8 @@ import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.ProfileActivity;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class ProfileMusicView extends View {
 
     private final Theme.ResourcesProvider resourcesProvider;
@@ -86,6 +88,12 @@ public class ProfileMusicView extends View {
             }
             color1 = Theme.getColor(Theme.key_actionBarDefault, resourcesProvider);
             color2 = Theme.getColor(Theme.key_actionBarDefault, resourcesProvider);
+
+            if (MD3ListAdapter.canTryToIgnoreTopBarBackground(this)) {
+                color1 = color2 = Theme.getColor(Theme.key_windowBackgroundGray);
+                setBackgroundColor(color1);
+                return;
+            }
         } else {
             color1 = peerColor.getBgColor1(Theme.isCurrentThemeDark());
             color2 = peerColor.getBgColor2(Theme.isCurrentThemeDark());

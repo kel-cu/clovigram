@@ -13,7 +13,7 @@ public class BlurredBackgroundColorProviderThemed implements BlurredBackgroundCo
     private final float alpha;
 
     public BlurredBackgroundColorProviderThemed(Theme.ResourcesProvider resourcesProvider, int backgroundColorId) {
-        this(resourcesProvider, backgroundColorId, LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS) ? 0.84f : 0.76f);
+        this(resourcesProvider, backgroundColorId, 1f);
     }
 
     public BlurredBackgroundColorProviderThemed(Theme.ResourcesProvider resourcesProvider, int backgroundColorId, float alpha) {
@@ -45,7 +45,7 @@ public class BlurredBackgroundColorProviderThemed implements BlurredBackgroundCo
 
     @Override
     public int getShadowColor() {
-        return shadowColor;
+        return 0x00000000;
     }
 
     @Override
@@ -55,12 +55,12 @@ public class BlurredBackgroundColorProviderThemed implements BlurredBackgroundCo
 
     @Override
     public int getStrokeColorTop() {
-        return strokeColorTop;
+        return getBackgroundColor();
     }
 
     @Override
     public int getStrokeColorBottom() {
-        return strokeColorBottom;
+        return getBackgroundColor();
     }
 }
 

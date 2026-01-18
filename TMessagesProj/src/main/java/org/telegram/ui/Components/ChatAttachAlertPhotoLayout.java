@@ -115,6 +115,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import art.clovi.CloviConfig;
+import art.clovi.util.GlyphsUtils;
+
 public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayout implements NotificationCenter.NotificationCenterDelegate {
 
     private static final int VIEW_TYPE_AVATAR_CONSTRUCTOR = 4;
@@ -1253,6 +1256,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
                     }
                     videoRecordTime++;
                     recordTime.setText(AndroidUtilities.formatLongDuration(videoRecordTime));
+                    GlyphsUtils.sendVideoRecording();
                     AndroidUtilities.runOnUIThread(videoRecordRunnable, 1000);
                 };
                 AndroidUtilities.lockOrientation(baseFragment.getParentActivity());
@@ -1952,6 +1956,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
     }
 
     private void resetRecordState() {
+        GlyphsUtils.turnOff();
         if (parentAlert.destroyed) {
             return;
         }
@@ -2293,6 +2298,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
                 imageView.setContentDescription(LocaleController.getString(R.string.AccDescrCameraFlashOff));
                 break;
             case Camera.Parameters.FLASH_MODE_ON:
+
                 imageView.setImageResource(R.drawable.flash_on);
                 imageView.setContentDescription(LocaleController.getString(R.string.AccDescrCameraFlashOn));
                 break;
@@ -2476,7 +2482,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
         }
         if (cameraView == null) {
             final boolean lazy = !LiteMode.isEnabled(LiteMode.FLAGS_CHAT);
-            cameraView = new CameraView(getContext(), isCameraFrontfaceBeforeEnteringEditMode != null ? isCameraFrontfaceBeforeEnteringEditMode : parentAlert.openWithFrontFaceCamera, lazy) {
+            cameraView = new CameraView(getContext(), !CloviConfig.startWithBackCamera && (isCameraFrontfaceBeforeEnteringEditMode != null ? isCameraFrontfaceBeforeEnteringEditMode : parentAlert.openWithFrontFaceCamera), lazy) {
 
                 Bulletin.Delegate bulletinDelegate = new Bulletin.Delegate() {
                     @Override

@@ -92,6 +92,8 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import art.clovi.ui.MD3ListAdapter;
+
 public class ChatUsersActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     private static final int VIEW_TYPE_INNER_CHECK = 13;
@@ -579,6 +581,15 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                 }
                 loadingUserCellRow = rowCount++;
             }
+        }
+
+        if (listView != null) {
+            listView.post(() -> {
+                RecyclerView.Adapter adapter = listView.getAdapter();
+                if (adapter instanceof MD3ListAdapter md3) {
+                    md3.reapplyVisible();
+                }
+            });
         }
     }
 
@@ -3137,7 +3148,7 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
         }
     }
 
-    private class ListAdapter extends RecyclerListView.SelectionAdapter {
+    private class ListAdapter extends MD3ListAdapter {
 
         private Context mContext;
 

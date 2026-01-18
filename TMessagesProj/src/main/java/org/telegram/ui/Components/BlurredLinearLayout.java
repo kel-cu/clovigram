@@ -22,7 +22,7 @@ public class BlurredLinearLayout extends LinearLayout {
     public int backgroundPaddingBottom;
     public int backgroundPaddingTop;
     public boolean isTopView = true;
-    public boolean drawBlur = true;
+    public boolean drawBlur = false;
 
     public BlurredLinearLayout(@NonNull Context context, SizeNotifierFrameLayout sizeNotifierFrameLayout) {
         super(context);
