@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -89,6 +90,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import art.clovi.CloviConfig;
 import art.clovi.ui.MD3ListAdapter;
 
 public class StickersActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
@@ -466,7 +468,8 @@ public class StickersActivity extends BaseFragment implements NotificationCenter
                 SharedConfig.toggleSuggestAnimatedEmoji();
                 ((TextCheckCell) view).setChecked(SharedConfig.suggestAnimatedEmoji);
             } else if (position == reactionsDoubleTapRow) {
-                presentFragment(new ReactionsDoubleTapManageActivity());
+                if(CloviConfig.disableDoubleTapReaction) Toast.makeText(getContext(), LocaleController.getString(R.string.ThisActivityDisabledByConfig), Toast.LENGTH_LONG).show();
+                else presentFragment(new ReactionsDoubleTapManageActivity());
             } else if (position == dynamicPackOrder) {
                 SharedConfig.toggleUpdateStickersOrderOnSend();
                 ((TextCheckCell) view).setChecked(SharedConfig.updateStickersOrderOnSend);

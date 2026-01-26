@@ -252,6 +252,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import art.clovi.CloviConfig;
+import art.clovi.ui.MD3ListAdapter;
 
 public class DialogsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, FloatingDebugProvider {
 
@@ -3059,10 +3060,17 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             }
         };
         actionBar.setUseContainerForTitles();
-        actionBar.setItemsBackgroundColor(Theme.getColor(Theme.key_actionBarDefaultSelector), false);
-        actionBar.setItemsBackgroundColor(Theme.getColor(Theme.key_actionBarActionModeDefaultSelector), true);
-        actionBar.setItemsColor(Theme.getColor(Theme.key_actionBarDefaultIcon), false);
-        actionBar.setItemsColor(Theme.getColor(Theme.key_actionBarActionModeDefaultIcon), true);
+//        if (MD3ListAdapter.isMd3ContainersEnabled()) {
+//            actionBar.setBackgroundColor(getThemedColor(Theme.key_windowBackgroundWhite));
+//            actionBar.setItemsBackgroundColor(getThemedColor(Theme.key_actionBarActionModeDefaultSelector), true);
+//            actionBar.setItemsColor(getThemedColor(Theme.key_actionBarActionModeDefaultIcon), true);
+//            actionBar.setTitleColor(getThemedColor(Theme.key_windowBackgroundWhiteBlackText));
+//        } else {
+            actionBar.setItemsBackgroundColor(Theme.getColor(Theme.key_actionBarDefaultSelector), false);
+            actionBar.setItemsBackgroundColor(Theme.getColor(Theme.key_actionBarActionModeDefaultSelector), true);
+            actionBar.setItemsColor(Theme.getColor(Theme.key_actionBarDefaultIcon), false);
+            actionBar.setItemsColor(Theme.getColor(Theme.key_actionBarActionModeDefaultIcon), true);
+//        }
         if (inPreviewMode || AndroidUtilities.isTablet() && folderId != 0 && !isArchive()) {
             actionBar.setOccupyStatusBar(false);
         }
@@ -3077,6 +3085,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         pacmanAnimation = null;
         filterTabsView = null;
         selectedDialogs.clear();
+//        if (MD3ListAdapter.isMd3ContainersEnabled()) {
+//            filterTabsView.setBackgroundColor(getThemedColor(Theme.key_windowBackgroundWhite));
+////            filterTabsView.setItemsBackgroundColor(getThemedColor(Theme.key_actionBarActionModeDefaultSelector), true);
+////            filterTabsView.setItemsColor(getThemedColor(Theme.key_actionBarActionModeDefaultIcon), true);
+////            filterTabsView.setTitleColor(getThemedColor(Theme.key_windowBackgroundWhiteBlackText));
+//        }
 
         maximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
 
@@ -6179,7 +6193,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                     Theme.key_windowBackgroundWhiteValueText,
                     AndroidUtilities.REPLACING_TAG_TYPE_LINKBOLD,
                     null
-            ), null, false), LocaleController.formatString("BoostingPremiumChristmasSubTitle", R.string.BoostingPremiumChristmasSubTitle));
+            ), null, false), LocaleController.formatString(R.string.BoostingPremiumChristmasSubTitle));
             dialogsHintCell.setOnCloseListener(v -> {
                 MessagesController.getInstance(currentAccount).removeSuggestion(0, "PREMIUM_CHRISTMAS");
                 ChangeBounds transition = new ChangeBounds();

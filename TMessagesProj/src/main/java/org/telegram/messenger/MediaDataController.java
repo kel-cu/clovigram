@@ -103,6 +103,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import art.clovi.CloviConfig;
+
 @SuppressWarnings("unchecked")
 public class MediaDataController extends BaseController {
     public final static String ATTACH_MENU_BOT_ANIMATED_ICON_KEY = "android_animated",
@@ -8289,6 +8291,7 @@ public class MediaDataController extends BaseController {
     }
 
     public String getDoubleTapReaction() {
+        if(CloviConfig.disableDoubleTapReaction) return null;
         if (doubleTapReaction != null) {
             return doubleTapReaction;
         }

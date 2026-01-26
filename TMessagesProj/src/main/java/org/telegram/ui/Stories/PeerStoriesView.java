@@ -217,6 +217,8 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
+import art.clovi.CloviConfig;
+
 public class PeerStoriesView extends SizeNotifierFrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
     public static boolean DISABLE_STORY_REPOSTING = false;
@@ -5250,7 +5252,7 @@ public class PeerStoriesView extends SizeNotifierFrameLayout implements Notifica
                         dotDividerSpan.setTopPadding(AndroidUtilities.dp(1.5f));
                         dotDividerSpan.setSize(5);
                         spannableStringBuilder.append(" . ").setSpan(dotDividerSpan, spannableStringBuilder.length() - 2, spannableStringBuilder.length() - 1, 0);
-                        spannableStringBuilder.append(getString(R.string.EditedMessage));
+                        spannableStringBuilder.append(CloviConfig.replaceEditedToPen ? "🖋" : getString(R.string.EditedMessage));
                         string = spannableStringBuilder;
                     }
                     subtitle = string;

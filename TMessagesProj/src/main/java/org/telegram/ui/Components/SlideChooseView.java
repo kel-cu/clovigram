@@ -57,6 +57,8 @@ public class SlideChooseView extends View {
 
     private boolean touchWasClose = false;
 
+    private boolean allowSlide = true;
+
     public SlideChooseView(Context context) {
         this(context, null);
     }
@@ -138,6 +140,9 @@ public class SlideChooseView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!allowSlide) {
+            return true;
+        }
         float x = event.getX();
         float y = event.getY();
         float indexTouch = MathUtils.clamp((x - sideSide + circleSize / 2f) / (lineSize + gapSize * 2 + circleSize), 0, optionsStr.length - 1);
@@ -228,6 +233,9 @@ public class SlideChooseView extends View {
             float t = Math.max(0, 1f - Math.abs(a - selectedIndexAnimated));
             float ut = MathUtils.clamp(selectedIndexAnimated - a + 1f, 0, 1);
             int color = ColorUtils.blendARGB(getThemedColor(Theme.key_switchTrack), Theme.multAlpha(getThemedColor(Theme.key_switchTrackChecked), minIndex != Integer.MIN_VALUE && a <= minIndex ? .50f : 1.0f), ut);
+            if (!allowSlide) {
+                color = ColorUtils.setAlphaComponent(color, 0x7f);
+            }
             paint.setColor(color);
             linePaint.setColor(color);
             canvas.drawCircle(cx, cy, AndroidUtilities.lerp(circleSize / 2, AndroidUtilities.dp(6), t), paint);
@@ -254,7 +262,7 @@ public class SlideChooseView extends View {
             }
             int size = optionsSizes[a];
             String text = optionsStr[a];
-            textPaint.setColor(ColorUtils.blendARGB(getThemedColor(Theme.key_windowBackgroundWhiteGrayText), getThemedColor(Theme.key_windowBackgroundWhiteBlueText), t));
+            textPaint.setColor(ColorUtils.setAlphaComponent(ColorUtils.blendARGB(getThemedColor(Theme.key_windowBackgroundWhiteGrayText), getThemedColor(Theme.key_windowBackgroundWhiteBlueText), t), allowSlide ? 255 : 127));
 
             if (leftDrawables != null) {
                 canvas.save();
@@ -286,9 +294,9 @@ public class SlideChooseView extends View {
         }
 
         float cx = sideSide + (lineSize + gapSize * 2 + circleSize) * selectedIndexAnimated + circleSize / 2;
-        paint.setColor(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_switchTrackChecked), 80));
+        paint.setColor(ColorUtils.setAlphaComponent(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_switchTrackChecked), 80), allowSlide ? 255 : 127));
         canvas.drawCircle(cx, cy, AndroidUtilities.dp(12 * movingAnimated), paint);
-        paint.setColor(getThemedColor(Theme.key_switchTrackChecked));
+        paint.setColor(ColorUtils.setAlphaComponent(getThemedColor(Theme.key_switchTrackChecked), allowSlide ? 255 : 127));
         canvas.drawCircle(cx, cy, AndroidUtilities.dp(6), paint);
     }
 
@@ -318,5 +326,8 @@ public class SlideChooseView extends View {
         default void onTouchEnd() {
 
         }
+    }
+    public void setAllowSlide(boolean allowSlide) {
+        this.allowSlide = allowSlide;
     }
 }

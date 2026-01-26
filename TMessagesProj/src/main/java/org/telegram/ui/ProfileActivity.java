@@ -1242,6 +1242,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     emojiColor = PeerColorActivity.adaptProfileEmojiColor(getThemedColor(Theme.key_actionBarDefault));
                     btnColor = Theme.multAlpha(PeerColorActivity.adaptProfileEmojiColor(getThemedColor(Theme.key_actionBarDefault)), .15f);
                 }
+                if (shouldTryToForceColors()) {
+                    color1 = color2 = Theme.getColor(Theme.key_windowBackgroundGray);
+                }
             }
             if (!animated) {
                 color1Animated.set(color1, true);
@@ -5077,7 +5080,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
         topView = new TopView(context);
         topView.setBackgroundColorId(peerColor, false);
-        topView.setBackgroundColor(getThemedColor(Theme.key_avatar_backgroundActionBarBlue));
+        topView.setBackgroundColor(getThemedColor(shouldTryToForceColors() ? Theme.key_windowBackgroundGray : Theme.key_avatar_backgroundActionBarBlue));
         frameLayout.addView(topView);
         contentView.blurBehindViews.add(topView);
 
@@ -8469,6 +8472,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         - dp(21)
                         + actionBar.getTranslationY();
                 avatarY = lerp(endY, startY, diff);
+                if (shouldTryToForceColors()) {
+                    topView.setBackgroundColor(ColorUtils.blendARGB(getThemedColor(Theme.key_avatar_backgroundActionBarBlue), getThemedColor(Theme.key_windowBackgroundGray), Math.min(1f, extraHeight / getHeaderExtraHeight())));
+                }
             } else {
                 avatarY = endNameY;
             }
@@ -8621,7 +8627,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         } else {
                             expandAnimator.setDuration(0);
                         }
-                        topView.setBackgroundColor(getThemedColor(Theme.key_avatar_backgroundActionBarBlue));
+                        topView.setBackgroundColor(getThemedColor(shouldTryToForceColors() ? Theme.key_windowBackgroundGray : Theme.key_avatar_backgroundActionBarBlue));
 
                         if (!doNotSetForeground) {
                             BackupImageView imageView = avatarsViewPager.getCurrentItemView();
@@ -9865,6 +9871,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             color = avatarColor;
         } else {
             color = AvatarDrawable.getProfileBackColorForId(userId != 0 || ChatObject.isChannel(chatId, currentAccount) && !currentChat.megagroup ? 5 : chatId, resourcesProvider);
+        }
+        if (peerColor == null && shouldTryToForceColors()) {
+            color = Theme.getColor(Theme.key_windowBackgroundGray);
         }
 
         int actionBarColor = actionBarAnimationColorFrom != 0 ? actionBarAnimationColorFrom : getThemedColor(Theme.key_actionBarDefault);
@@ -14555,7 +14564,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     new SearchResult(608, getString(R.string.Emoji), null, getString(R.string.StickersName), R.drawable.input_smile, () -> presentFragment(new StickersActivity(MediaDataController.TYPE_EMOJIPACKS, null))),
                     new SearchResult(609, getString(R.string.SuggestAnimatedEmoji), "suggestAnimatedEmojiRow", getString(R.string.StickersName), getString(R.string.Emoji), R.drawable.input_smile, () -> presentFragment(new StickersActivity(MediaDataController.TYPE_EMOJIPACKS, null))),
                     new SearchResult(610, getString(R.string.FeaturedEmojiPacks), "featuredStickersHeaderRow", getString(R.string.StickersName), getString(R.string.Emoji), R.drawable.input_smile, () -> presentFragment(new StickersActivity(MediaDataController.TYPE_EMOJIPACKS, null))),
-                    new SearchResult(611, getString(R.string.DoubleTapSetting), null, getString(R.string.StickersName), R.drawable.msg2_sticker, () -> presentFragment(new ReactionsDoubleTapManageActivity())),
+                    new SearchResult(611, getString(R.string.DoubleTapSetting), null, getString(R.string.StickersName), R.drawable.msg2_sticker, () -> {
+                        if(CloviConfig.disableDoubleTapReaction) Toast.makeText(getContext(), LocaleController.getString(R.string.ThisActivityDisabledByConfig), Toast.LENGTH_LONG).show();
+                        else presentFragment(new ReactionsDoubleTapManageActivity());
+                    }),
 
                     new SearchResult(700, getString(R.string.Filters), null, R.drawable.msg2_folder, () -> presentFragment(new FiltersSetupActivity())),
                     new SearchResult(701, getString(R.string.CreateNewFilter), "createFilterRow", getString(R.string.Filters), R.drawable.msg2_folder, () -> presentFragment(new FiltersSetupActivity())),
@@ -16375,6 +16387,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         itemOptions.show();
 
         return true;
+    }
+    private boolean shouldTryToForceColors() {
+        return MD3ListAdapter.canTryToIgnoreTopBarBackground(this) && ColorUtils.calculateLuminance(Theme.getColor(Theme.key_windowBackgroundGray)) < 0.5f;
     }
     private void updateItemsUsername() {
         if (!myProfile || setUsernameItem == null || linkItem == null) return;

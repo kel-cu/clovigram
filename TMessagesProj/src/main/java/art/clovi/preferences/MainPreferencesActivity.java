@@ -49,6 +49,7 @@ import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.HeaderCell;
 import org.telegram.ui.Cells.TextCell;
 import org.telegram.ui.Cells.TextInfoPrivacyCell;
+import org.telegram.ui.ChatEditActivity;
 import org.telegram.ui.Components.AnimatedEmojiDrawable;
 import org.telegram.ui.Components.AnimatedTextView;
 import org.telegram.ui.Components.Bulletin;
@@ -58,6 +59,7 @@ import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.ListView.AdapterWithDiffUtils;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.Switch;
+import org.telegram.ui.DialogsActivity;
 import org.telegram.ui.LaunchActivity;
 
 import java.util.ArrayList;
@@ -113,14 +115,7 @@ public class MainPreferencesActivity extends BaseFragment {
               GlyphsUtils.sendTest();
             } else if (item.viewType == VIEW_TYPE_SWITCH || item.viewType == VIEW_TYPE_SWITCH2 || item.viewType == VIEW_TYPE_CHECKBOX) {
                 CloviConfig.setValue(item.flags);
-                if(item.needRestart){
-                    Toast.makeText(context, LocaleController.getString(R.string.NeedRestartDescription), Toast.LENGTH_LONG).show();
-
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-//                    builder.setTitle(LocaleController.getString(R.string.NeedRestart));
-//                    builder.setMessage(LocaleController.getString(R.string.NeedRestartDescription));
-//                    builder.show();
-                }
+                if(item.needRestart) Toast.makeText(context, LocaleController.getString(R.string.NeedRestartDescription), Toast.LENGTH_LONG).show();
                 updateValues();
             }
         });
@@ -182,26 +177,42 @@ public class MainPreferencesActivity extends BaseFragment {
         oldItems.addAll(items);
 
         items.clear();
-        items.add(MainPreferencesActivity.Item.asHeader("Basic"));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_secret, LocaleController.getString(R.string.HidePhoneNumber), 0));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.menu_tag_rename, LocaleController.getString(R.string.ReplaceTitleWithName), 1, true));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_camera, LocaleController.getString(R.string.StartWithBackCamera), 3));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.menu_cover_stories, LocaleController.getString(R.string.HideStories), 7));
-        if(AndroidUtilities.needRealIsTablet()) items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.device_tablet_android, LocaleController.getString(R.string.DisableTabletMode), 8));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.device_phone_android, LocaleController.getString(R.string.useMD3ListDesign), 9));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_allowspeak, LocaleController.getString(R.string.HideDeveloperSite), 10));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_photo_text_regular, LocaleController.getString(R.string.UseSystemFont), 11));
-        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_emoji_cat, LocaleController.getString(R.string.UseSystemEmoji), 12));
+        // -=-=-=- Base
+        items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.Basic)));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_camera, LocaleController.getString(R.string.StartWithBackCamera), 3));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_photo_text_regular, LocaleController.getString(R.string.UseSystemFont), 11, true));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_emoji_cat, LocaleController.getString(R.string.UseSystemEmoji), 12, true));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.left_status_profile, LocaleController.getString(R.string.ShowProfileButton), 14));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_stats, LocaleController.getString(R.string.AddPostStatsButton), 17));
         items.add(MainPreferencesActivity.Item.asInfo(LocaleController.getString(R.string.NeedRestartDescription)));
+        // -=-=-=- Replaceable
+        items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.Replaceable)));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.menu_tag_rename, LocaleController.getString(R.string.ReplaceTitleWithName), 1, true));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.floating_pencil, LocaleController.getString(R.string.ChangeEditedToPen), 16));
+        items.add(Item.asInfo(""));
+        // -=-=-=- Disabled items
+        items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.DisabledItems)));
+        if(AndroidUtilities.needRealIsTablet()) items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.device_tablet_android, LocaleController.getString(R.string.DisableTabletMode), 8, true));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_secret, LocaleController.getString(R.string.HidePhoneNumber), 0));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.menu_cover_stories, LocaleController.getString(R.string.HideStories), 7));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_allowspeak, LocaleController.getString(R.string.HideDeveloperSite), 10));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.fingerprint, LocaleController.getString(R.string.DisableDoubleTapReactions), 13));
+        items.add(Item.asInfo(""));
+        // -=-=-=- MD3
+        items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.MaterialDesign3)));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_list, LocaleController.getString(R.string.useMD3ListDesign), 9));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.mini_checklist_done, LocaleController.getString(R.string.useMD3ComponentsDesign), 15));
+        items.add(Item.asInfo(""));
+        // -=-=-=- Nothing Glyph
         if(!GlyphsUtils.isSupportedDevice()){
             if(Util.SDK_INT < 36){
                 items.add(MainPreferencesActivity.Item.asInfo(LocaleController.getString(R.string.NoSupportedAndroidNothing)));
             } else items.add(MainPreferencesActivity.Item.asInfo(LocaleController.getString(R.string.NoNothing)));
         } else {
-            items.add(MainPreferencesActivity.Item.asHeader("Nothing Glyph"));
-            items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_noise_on, LocaleController.getString(R.string.EnableGlyphInterface), 4));
-            items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.ab_progress, LocaleController.getString(R.string.AllowShowProgressGlyph), 5));
-            items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_videocall, LocaleController.getString(R.string.AllowShowRecordGlyph), 6));
+            items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.NothingGlyph)));
+            items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_noise_on, LocaleController.getString(R.string.EnableGlyphInterface), 4));
+            items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.ab_progress, LocaleController.getString(R.string.AllowShowProgressGlyph), 5));
+            items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_videocall, LocaleController.getString(R.string.AllowShowRecordGlyph), 6));
             items.add(MainPreferencesActivity.Item.asInfo(String.format("%s: %s", LocaleController.getString(R.string.NothingSeries), GlyphsUtils.getDeviceName())));
             if(ApplicationLoader.isBetaBuild()) items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_photo_text_framed2,"test toggle", -1));
         }
@@ -441,10 +452,8 @@ public class MainPreferencesActivity extends BaseFragment {
                 textView.setText(item.text);
                 countTextView.setVisibility(GONE);
                 arrowView.setVisibility(GONE);
-                textView.setTranslationX(0);
                 switchView.setVisibility(VISIBLE);
                 switchView.setChecked(CloviConfig.getValue(item.flags), false);
-                needLine = item.getFlagsCount() > 1;
             } else {
                 checkBoxView.setVisibility(VISIBLE);
                 checkBoxView.setChecked(CloviConfig.getValue(item.flags), false);
@@ -455,17 +464,18 @@ public class MainPreferencesActivity extends BaseFragment {
                 arrowView.setVisibility(GONE);
                 textView.setText(item.text);
                 textView.setTranslationX(dp(41) * (LocaleController.isRTL ? -2.2f : 1));
-                containing = false;
-                needLine = false;
             }
+            containing = false;
+            needLine = false;
 
-            ((MarginLayoutParams) textViewLayout.getLayoutParams()).rightMargin = AndroidUtilities.dp(item.viewType == VIEW_TYPE_SWITCH ? (LocaleController.isRTL ? 64 : 75) + 4 : 8);
+            ((MarginLayoutParams) textViewLayout.getLayoutParams()).rightMargin = AndroidUtilities.dp(16);
 
             setWillNotDraw(!((needDivider = divider) || needLine));
         }
 
         public void update(MainPreferencesActivity.Item item) {
             checkBoxView.setChecked(CloviConfig.getValue(item.flags), true);
+            switchView.setChecked(CloviConfig.getValue(item.flags), true);
         }
 
         private boolean containing;

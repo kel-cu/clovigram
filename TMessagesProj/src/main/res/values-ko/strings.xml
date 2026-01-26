@@ -1149,7 +1149,7 @@
     <string name="UseYandexMaps">Use Yandex Maps</string>
     <string name="NoSupportedAndroidNothing">Your Android version is not supported for working with Glyph Interface</string>
     <string name="NoNothing">Your smartphone is not supported for working with glyphs. Supported models:\\nNothing Phone (3a)</string>
-    <string name="StartWithBackCamera">Start recording circles from the rear camera</string>
+    <string name="StartWithBackCamera">Start rounds from the rear camera</string>
     <string name="EnableGlyphInterface">Enable Glyph Interface</string>
     <string name="AllowShowRecordGlyph">Allow the recording indicator to be shown</string>
     <string name="AllowShowProgressGlyph">Allow the listening indicator to be displayed</string>
@@ -1161,4 +1161,15 @@
     <string name="UseSystemFont">Use System Fonts</string>
     <string name="UseSystemEmoji">Use System Emoji</string>
     <string name="useMD3ListDesign">MD3 List Design</string>
+    <string name="DisableDoubleTapReactions">Disable Double Tap Reactions</string>
+    <string name="ThisActivityDisabledByConfig">This Activity Disabled By Config</string>
+    <string name="ShowProfileButton">Show Profile Button</string>
+    <string name="useMD3ComponentsDesign">MD3 Components Design</string>
+    <string name="ChangeEditedToPen">Change edited to 🖋</string>
+    <string name="AddPostStatsButton">Add a post statistics button</string>
+    <string name="Basic">Basic</string>
+    <string name="Replaceable">Replaceable</string>
+    <string name="DisabledItems">Disabled Items</string>
+    <string name="MaterialDesign3">Material Design 3</string>
+    <string name="NothingGlyph">Nothing Glyph</string>
 </resources>

@@ -5540,6 +5540,7 @@ public class MessageObject {
 
                     messageText = replaceTags(formatString(key, userName, amountFmt, giftName));
                 }
+
             }
         } else {
             isRestrictedMessage = false;

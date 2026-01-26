@@ -3162,7 +3162,7 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
             if (viewType == VIEW_TYPE_CHECK) {
                 return true;
             }
-            if (viewType == 7 || viewType == VIEW_TYPE_EXPANDABLE_SWITCH) {
+            if (viewType == 7 || viewType == VIEW_TYPE_EXPANDABLE_SWITCH || viewType == VIEW_TYPE_INNER_CHECK) {
                 return ChatObject.canBlockUsers(currentChat);
             } else if (viewType == 0) {
                 ManageChatUserCell cell = (ManageChatUserCell) holder.itemView;
@@ -3276,6 +3276,7 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     SlideChooseView chooseView = new SlideChooseView(mContext);
                     view = chooseView;
                     chooseView.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
+                    chooseView.setAllowSlide(ChatObject.hasAdminRights(currentChat));
                     chooseView.setOptions(
                             selectedSlowmode,
                             getString("SlowmodeOff", R.string.SlowmodeOff),
@@ -3322,7 +3323,7 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     CheckBoxCell checkBoxCell = new CheckBoxCell(mContext, 4, 21, getResourceProvider());
                     checkBoxCell.getCheckBoxRound().setDrawBackgroundAsArc(14);
                     checkBoxCell.getCheckBoxRound().setColor(Theme.key_switch2TrackChecked, Theme.key_radioBackground, Theme.key_checkboxCheck);
-                    checkBoxCell.setEnabled(true);
+                    checkBoxCell.setEnabled(ChatObject.canBlockUsers(currentChat));
                     view = checkBoxCell;
                     view.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
                     break;
@@ -3590,6 +3591,7 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                         checkCell.setCollapseArrow(String.format(Locale.US, "%d/9", sentMediaCount), !sendMediaExpanded, new Runnable() {
                             @Override
                             public void run() {
+                                if (!ChatObject.canBlockUsers(currentChat)) return;
                                 boolean checked = !checkCell.isChecked();
                                 checkCell.setChecked(checked);
                                 setSendMediaEnabled(checked);
@@ -3681,8 +3683,8 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     } else if (position == sendPollsRow) {
                         checkBoxCell.setText(getString("SendMediaPolls", R.string.SendMediaPolls), "", !defaultBannedRights.send_polls, false, animated);
                     } else
-                    //  checkBoxCell.setText(getCheckBoxTitle(item.headerName, percents[item.index < 0 ? 8 : item.index], item.index < 0), AndroidUtilities.formatFileSize(item.size), selected, item.index < 0 ? !collapsed : !item.last);
-                    checkBoxCell.setPad(1);
+                        //  checkBoxCell.setText(getCheckBoxTitle(item.headerName, percents[item.index < 0 ? 8 : item.index], item.index < 0), AndroidUtilities.formatFileSize(item.size), selected, item.index < 0 ? !collapsed : !item.last);
+                        checkBoxCell.setPad(1);
                     break;
                 case VIEW_TYPE_CHECK:
                     TextCheckCell checkCell2 = (TextCheckCell) holder.itemView;

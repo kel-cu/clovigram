@@ -326,6 +326,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import art.clovi.CloviConfig;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 import me.vkryl.core.BitwiseUtils;
@@ -42300,6 +42301,7 @@ public class ChatActivity extends BaseFragment implements
 
     private StarReactionsOverlay starReactionsOverlay;
     public StarReactionsOverlay getStarReactionsOverlay() {
+        if(CloviConfig.replaceEditedToPen) return null;
         if (starReactionsOverlay == null) {
             starReactionsOverlay = new StarReactionsOverlay(ChatActivity.this);
         }
@@ -43657,6 +43659,11 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.ViewInTopic));
                     options.add(OPTION_VIEW_IN_TOPIC);
                     icons.add(R.drawable.msg_viewintopic);
+                }
+                if(selectedObject != null && ChatObject.isChannel(currentChat) && !ChatObject.isMonoForum(currentChat) && ChatObject.hasAdminRights(currentChat) && CloviConfig.addPostStatsButton){
+                    items.add(LocaleController.getString(R.string.PostStatistics));
+                    options.add(OPTION_STATISTICS);
+                    icons.add(R.drawable.msg_stats);
                 }
                 if (type == 2) {
                     if (chatMode != MODE_SCHEDULED) {

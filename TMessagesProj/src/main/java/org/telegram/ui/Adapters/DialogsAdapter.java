@@ -82,6 +82,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 
+import art.clovi.ui.MD3AdapterWithDiffUtils;
+import art.clovi.ui.MD3ListAdapter;
+
+//public class DialogsAdapter extends MD3AdapterWithDiffUtils implements DialogCell.DialogCellDelegate {
 public class DialogsAdapter extends RecyclerListView.SelectionAdapter implements DialogCell.DialogCellDelegate {
     public final static int VIEW_TYPE_DIALOG = 0,
             VIEW_TYPE_FLICKER = 1,
