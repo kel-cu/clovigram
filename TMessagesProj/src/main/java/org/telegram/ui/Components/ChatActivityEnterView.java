@@ -204,6 +204,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import art.clovi.CloviConfig;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 
@@ -3025,6 +3026,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         sendButtonContainer.addView(audioVideoButtonContainer, LayoutHelper.createFrame(DEFAULT_HEIGHT, DEFAULT_HEIGHT, Gravity.RIGHT | Gravity.BOTTOM));
         audioVideoButtonContainer.setFocusable(true);
         audioVideoButtonContainer.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        if(CloviConfig.hideVoiceAndRounds) audioVideoButtonContainer.setVisibility(GONE);
 
 //        audioVideoButtonContainer.setOnTouchListener((view, motionEvent) -> {
 //            createRecordCircle();
@@ -7965,7 +7967,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                     }
                 }
 
-                audioVideoButtonContainer.setVisibility(VISIBLE);
+                audioVideoButtonContainer.setVisibility(CloviConfig.hideVoiceAndRounds ? GONE : VISIBLE);
                 runningAnimation = new AnimatorSet();
                 runningAnimationType = 2;
 
@@ -8012,7 +8014,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                             runningAnimationType = 0;
 
                             if (audioVideoButtonContainer != null) {
-                                audioVideoButtonContainer.setVisibility(VISIBLE);
+                                audioVideoButtonContainer.setVisibility(CloviConfig.hideVoiceAndRounds ? GONE : VISIBLE);
                             }
                         }
                     }
@@ -8047,7 +8049,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                 audioVideoButtonContainer.setScaleX(1.0f);
                 audioVideoButtonContainer.setScaleY(1.0f);
                 audioVideoButtonContainer.setAlpha(1.0f);
-                audioVideoButtonContainer.setVisibility(VISIBLE);
+                audioVideoButtonContainer.setVisibility(CloviConfig.hideVoiceAndRounds ? GONE : VISIBLE);
                 if (attachLayout != null) {
                     if (getVisibility() == VISIBLE) {
                         delegate.onAttachButtonShow();
@@ -9410,7 +9412,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                 audioVideoButtonContainer.setScaleX(1.0f);
                 audioVideoButtonContainer.setScaleY(1.0f);
                 audioVideoButtonContainer.setAlpha(1.0f);
-                audioVideoButtonContainer.setVisibility(VISIBLE);
+                audioVideoButtonContainer.setVisibility(CloviConfig.hideVoiceAndRounds ? GONE : VISIBLE);
             }
             createScheduledButton();
             if (scheduledButton != null && scheduledButton.getTag() != null) {

@@ -7,11 +7,13 @@
  */
 package art.clovi.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 
 import org.telegram.messenger.AndroidUtilities;
 
+@SuppressLint("ViewConstructor")
 public class FakeProfileHeaderEmpty extends View {
 
     public FakeProfileHeaderEmpty(Context context, int color) {

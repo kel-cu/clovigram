@@ -184,11 +184,13 @@ public class MainPreferencesActivity extends BaseFragment {
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_emoji_cat, LocaleController.getString(R.string.UseSystemEmoji), 12, true));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.left_status_profile, LocaleController.getString(R.string.ShowProfileButton), 14));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_stats, LocaleController.getString(R.string.AddPostStatsButton), 17));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_settings_ny, LocaleController.getString(R.string.ShowSnowOnProfile), 19, false));
         items.add(MainPreferencesActivity.Item.asInfo(LocaleController.getString(R.string.NeedRestartDescription)));
         // -=-=-=- Replaceable
         items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.Replaceable)));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.menu_tag_rename, LocaleController.getString(R.string.ReplaceTitleWithName), 1, true));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.floating_pencil, LocaleController.getString(R.string.ChangeEditedToPen), 16));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.premium_colors, LocaleController.getString(R.string.UsePremiumBackgroundOnDrawer), 18, true));
         items.add(Item.asInfo(""));
         // -=-=-=- Disabled items
         items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.DisabledItems)));
@@ -374,7 +376,7 @@ public class MainPreferencesActivity extends BaseFragment {
             imageView.setVisibility(View.GONE);
             addView(imageView, LayoutHelper.createFrame(24, 24, Gravity.CENTER_VERTICAL | (LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT), 20, 0, 20, 0));
 
-            textView = new TextView(context) {
+            textView = new androidx.appcompat.widget.AppCompatTextView(context) {
                 @Override
                 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                     if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.AT_MOST) {

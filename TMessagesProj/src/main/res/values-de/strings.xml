@@ -1411,4 +1411,6 @@
     <string name="DisabledItems">Disabled Items</string>
     <string name="MaterialDesign3">Material Design 3</string>
     <string name="NothingGlyph">Nothing Glyph</string>
+    <string name="ShowSnowOnProfile">Enable snow in profile</string>
+    <string name="UsePremiumBackgroundOnDrawer">Enable Premium Background in side menu</string>
 </resources>

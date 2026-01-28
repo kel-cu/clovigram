@@ -298,4 +298,6 @@
     <string name="DisabledItems">Отключаемые</string>
     <string name="MaterialDesign3">Material Design 3</string>
     <string name="NothingGlyph">Nothing Glyph</string>
+    <string name="ShowSnowOnProfile">Включить снег в профиле</string>
+    <string name="UsePremiumBackgroundOnDrawer">Включить премиум фон в боковом меню</string>
 </resources>

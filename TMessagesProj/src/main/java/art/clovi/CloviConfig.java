@@ -14,6 +14,7 @@ package art.clovi;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import org.telegram.messenger.ApplicationLoader;
+import org.telegram.messenger.R;
 
 public class CloviConfig {
 
@@ -34,12 +35,15 @@ public class CloviConfig {
     public static boolean showProfileButton;
     public static boolean replaceEditedToPen;
     public static boolean addPostStatsButton;
+    public static boolean usePremiumBackgroundOnDrawer;
+    public static boolean showSnowOnProfile;
     // Camera
     public static boolean startWithBackCamera;
     // Nothing Glyphs
     public static boolean enableGlyphs;
     public static boolean allowShowProgressGlyph;
     public static boolean allowShowRecordGlyph;
+    public static boolean hideVoiceAndRounds;
     // ээ
     private static boolean configLoaded;
 
@@ -73,6 +77,9 @@ public class CloviConfig {
             showProfileButton = preferences.getBoolean("showProfileButton", false);
             replaceEditedToPen = preferences.getBoolean("replaceEditedToPen", true);
             addPostStatsButton = preferences.getBoolean("addPostStatsButton", true);
+            usePremiumBackgroundOnDrawer = preferences.getBoolean("usePremiumBackgroundOnDrawer", true);
+            showSnowOnProfile = preferences.getBoolean("showSnowOnProfile", false);
+            hideVoiceAndRounds = preferences.getBoolean("hideVoiceAndRounds", false);
 
             // Nothing Glyphs
             enableGlyphs = preferences.getBoolean("enableGlyphs", true);
@@ -121,7 +128,10 @@ public class CloviConfig {
         } else if(FLAG == 15){
             return isMd3ComponentsEnabled;
         } else if(FLAG == 16) return replaceEditedToPen;
-        else return addPostStatsButton;
+        else if(FLAG == 17) return addPostStatsButton;
+        else if(FLAG == 18) return usePremiumBackgroundOnDrawer;
+        else if(FLAG == 19) return showSnowOnProfile;
+        else return hideVoiceAndRounds;
     }
     public static void setValue(int FLAG){
         if(FLAG == 0){
@@ -178,6 +188,15 @@ public class CloviConfig {
         } else if(FLAG == 17){
             CloviConfig.addPostStatsButton = !CloviConfig.addPostStatsButton;
             CloviConfig.editor.putBoolean("addPostStatsButton", addPostStatsButton);
+        } else if(FLAG == 18){
+            CloviConfig.usePremiumBackgroundOnDrawer = !CloviConfig.usePremiumBackgroundOnDrawer;
+            CloviConfig.editor.putBoolean("usePremiumBackgroundOnDrawer", usePremiumBackgroundOnDrawer);
+        } else if(FLAG == 19){
+            CloviConfig.showSnowOnProfile = !CloviConfig.showSnowOnProfile;
+            CloviConfig.editor.putBoolean("showSnowOnProfile", showSnowOnProfile);
+        } else if(FLAG == 20){
+            CloviConfig.hideVoiceAndRounds = !CloviConfig.hideVoiceAndRounds;
+            CloviConfig.editor.putBoolean("hideVoiceAndRounds", hideVoiceAndRounds);
         }
         CloviConfig.editor.apply();
     }
