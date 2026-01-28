@@ -39,3 +39,8 @@ You will require Android Studio 3.4, Android NDK rev. 20 and Android SDK 8.1
 ### Localization
 
 We moved all translations to https://translations.telegram.org/en/android/. Please use it.
+
+### Thanks
+- [exteraGram](https://exteragram.app/) (3 years code 😊)
+- [OctoGram](https://octogram.me)
+- [Cherrygram](https://github.com/arsLan4k1390/Cherrygram)
