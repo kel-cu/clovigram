@@ -300,4 +300,6 @@
     <string name="NothingGlyph">Nothing Glyph</string>
     <string name="ShowSnowOnProfile">Включить снег в профиле</string>
     <string name="UsePremiumBackgroundOnDrawer">Включить премиум фон в боковом меню</string>
+    <string name="ShowSnowOnChats">Включить снег в чате</string>
+    <string name="Snow">Снег</string>
 </resources>

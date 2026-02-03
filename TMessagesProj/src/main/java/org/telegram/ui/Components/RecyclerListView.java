@@ -1502,7 +1502,7 @@ public class RecyclerListView extends RecyclerView {
             return;
         }
 
-        keepMd3Design = true; // forcing this value can cause many errors - keep it as a debug choice ^K
+//        keepMd3Design = true; // forcing this value can cause many errors - keep it as a debug choice ^K
 
         int top = Integer.MAX_VALUE;
         int bottom = Integer.MIN_VALUE;
@@ -1549,7 +1549,7 @@ public class RecyclerListView extends RecyclerView {
     }
 
     protected void drawSectionBackgroundExclusive(Canvas canvas, int fromAdapterPositionExclusive, int toAdapterPositionExclusive, int color, boolean keepMd3Design) {
-        keepMd3Design = true; // forcing this value can cause many errors - keep it as a debug choice ^K
+//        keepMd3Design = true; // forcing this value can cause many errors - keep it as a debug choice ^K
         int top = Integer.MAX_VALUE;
         int bottom = Integer.MIN_VALUE;
 

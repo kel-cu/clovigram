@@ -57,6 +57,8 @@ import org.telegram.ui.ChatBackgroundDrawable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import art.clovi.CloviConfig;
+
 public class SizeNotifierFrameLayout extends FrameLayout {
 
     public boolean DRAW_USING_RENDERNODE() {
@@ -570,7 +572,7 @@ public class SizeNotifierFrameLayout extends FrameLayout {
     }
 
     private void checkSnowflake(Canvas canvas) {
-        if (backgroundView != null && Theme.canStartHolidayAnimation() && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BACKGROUND)) {
+        if (backgroundView != null && (Theme.canStartHolidayAnimation() || CloviConfig.showSnowOnChats) && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BACKGROUND)) {
             if (snowflakesEffect == null) {
                 snowflakesEffect = new SnowflakesEffect(1);
             }

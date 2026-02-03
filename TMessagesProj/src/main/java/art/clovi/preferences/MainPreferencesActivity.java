@@ -48,6 +48,7 @@ import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.HeaderCell;
 import org.telegram.ui.Cells.TextCell;
+import org.telegram.ui.Cells.TextDetailCell;
 import org.telegram.ui.Cells.TextInfoPrivacyCell;
 import org.telegram.ui.ChatEditActivity;
 import org.telegram.ui.Components.AnimatedEmojiDrawable;
@@ -61,6 +62,7 @@ import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.Switch;
 import org.telegram.ui.DialogsActivity;
 import org.telegram.ui.LaunchActivity;
+import org.telegram.ui.ProfileActivity;
 
 import java.util.ArrayList;
 
@@ -184,11 +186,11 @@ public class MainPreferencesActivity extends BaseFragment {
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_emoji_cat, LocaleController.getString(R.string.UseSystemEmoji), 12, true));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.left_status_profile, LocaleController.getString(R.string.ShowProfileButton), 14));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_stats, LocaleController.getString(R.string.AddPostStatsButton), 17));
-        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_settings_ny, LocaleController.getString(R.string.ShowSnowOnProfile), 19, false));
         items.add(MainPreferencesActivity.Item.asInfo(LocaleController.getString(R.string.NeedRestartDescription)));
         // -=-=-=- Replaceable
         items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.Replaceable)));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.menu_tag_rename, LocaleController.getString(R.string.ReplaceTitleWithName), 1, true));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_location, LocaleController.getString(R.string.UseYandexMaps), 2, true));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.floating_pencil, LocaleController.getString(R.string.ChangeEditedToPen), 16));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.premium_colors, LocaleController.getString(R.string.UsePremiumBackgroundOnDrawer), 18, true));
         items.add(Item.asInfo(""));
@@ -205,6 +207,11 @@ public class MainPreferencesActivity extends BaseFragment {
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_list, LocaleController.getString(R.string.useMD3ListDesign), 9));
         items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.mini_checklist_done, LocaleController.getString(R.string.useMD3ComponentsDesign), 15));
         items.add(Item.asInfo(""));
+        items.add(MainPreferencesActivity.Item.asHeader(LocaleController.getString(R.string.Snow)));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_settings_ny, LocaleController.getString(R.string.ShowSnowOnProfile), 19, true));
+        items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_settings_ny, LocaleController.getString(R.string.ShowSnowOnChats), 21, true));
+        items.add(Item.asInfo(""));
+        boolean testingGlyph = false;
         // -=-=-=- Nothing Glyph
         if(!GlyphsUtils.isSupportedDevice()){
             if(Util.SDK_INT < 36){
@@ -216,10 +223,13 @@ public class MainPreferencesActivity extends BaseFragment {
             items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.ab_progress, LocaleController.getString(R.string.AllowShowProgressGlyph), 5));
             items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_videocall, LocaleController.getString(R.string.AllowShowRecordGlyph), 6));
             items.add(MainPreferencesActivity.Item.asInfo(String.format("%s: %s", LocaleController.getString(R.string.NothingSeries), GlyphsUtils.getDeviceName())));
-            if(ApplicationLoader.isBetaBuild()) items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.msg_photo_text_framed2,"test toggle", -1));
+            testingGlyph = true;
+        }
+        if(ApplicationLoader.isBetaBuild()){
+            items.add(MainPreferencesActivity.Item.asHeader("Testing tools"));
+            if(testingGlyph) items.add(MainPreferencesActivity.Item.asSwitch(R.drawable.smiles_tab_settings,"Test glyph", -1));
         }
 
-//        items.add(MainPreferencesActivity.Item.asCheckbox(R.drawable.msg_map, LocaleController.getString(R.string.UseYandexMaps), 2, true));
 
         adapter.setItems(oldItems, items);
     }
@@ -468,7 +478,7 @@ public class MainPreferencesActivity extends BaseFragment {
                 textView.setTranslationX(dp(41) * (LocaleController.isRTL ? -2.2f : 1));
             }
             containing = false;
-            needLine = false;
+            needLine = true;
 
             ((MarginLayoutParams) textViewLayout.getLayoutParams()).rightMargin = AndroidUtilities.dp(16);
 
@@ -527,15 +537,22 @@ public class MainPreferencesActivity extends BaseFragment {
     }
     private static class Item extends AdapterWithDiffUtils.Item {
         public CharSequence text;
+        public CharSequence description;
         public int iconResId;
         public int flags;
         public int type;
         public boolean needRestart;
 
         private Item(int viewType, CharSequence text, int iconResId, int flags, int type) {
-            this(viewType, text, iconResId, flags, type, false);
+            this(viewType, text, "", iconResId, flags, type);
+        }
+        private Item(int viewType, CharSequence text, CharSequence description, int iconResId, int flags, int type) {
+            this(viewType, text, description, iconResId, flags, type, false);
         }
         private Item(int viewType, CharSequence text, int iconResId, int flags, int type, boolean needRestart) {
+            this(viewType, text, "", iconResId, flags, type, needRestart);
+        }
+        private Item(int viewType, CharSequence text, CharSequence description, int iconResId, int flags, int type, boolean needRestart) {
             super(viewType, false);
             this.text = text;
             this.iconResId = iconResId;
@@ -552,6 +569,9 @@ public class MainPreferencesActivity extends BaseFragment {
         }
         public static MainPreferencesActivity.Item asInfo(CharSequence text) {
             return new MainPreferencesActivity.Item(VIEW_TYPE_INFO, text, 0, 0, 0);
+        }
+        public static MainPreferencesActivity.Item asDescription(CharSequence text, CharSequence description) {
+            return new MainPreferencesActivity.Item(VIEW_TYPE_INFO, text, description, 0, 0, 0);
         }
         public static MainPreferencesActivity.Item asSwitch(int iconResId, CharSequence text, int flags) {
             return new MainPreferencesActivity.Item(VIEW_TYPE_SWITCH, text, iconResId, flags, 0);

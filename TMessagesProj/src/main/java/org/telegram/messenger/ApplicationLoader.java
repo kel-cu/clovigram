@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import art.clovi.CloviConfig;
+import art.clovi.maps.YandexMapsProvider;
 
 public class ApplicationLoader extends Application {
 
@@ -106,7 +107,7 @@ public class ApplicationLoader extends Application {
     }
 
     protected IMapsProvider onCreateMapsProvider() {
-        return new GoogleMapsProvider();
+        return CloviConfig.useYandexMaps ? new YandexMapsProvider() : new GoogleMapsProvider();
     }
 
     public static PushListenerController.IPushListenerServiceProvider getPushProvider() {

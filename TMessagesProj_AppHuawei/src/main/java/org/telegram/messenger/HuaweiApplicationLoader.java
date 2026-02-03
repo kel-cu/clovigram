@@ -5,6 +5,9 @@ import com.huawei.hms.push.HmsMessaging;
 
 import org.telegram.messenger.huawei.BuildConfig;
 
+import art.clovi.CloviConfig;
+import art.clovi.maps.YandexMapsProvider;
+
 public class HuaweiApplicationLoader extends ApplicationLoader {
     @Override
     protected boolean isHuaweiBuild() {
@@ -34,9 +37,9 @@ public class HuaweiApplicationLoader extends ApplicationLoader {
     @Override
     protected IMapsProvider onCreateMapsProvider() {
         if (PushListenerController.GooglePushListenerServiceProvider.INSTANCE.hasServices()) {
-            return new GoogleMapsProvider();
+            return CloviConfig.useYandexMaps ? new YandexMapsProvider() : new GoogleMapsProvider();
         }
-        return new HuaweiMapsProvider();
+        return CloviConfig.useYandexMaps ? new YandexMapsProvider() : new HuaweiMapsProvider();
     }
 
     @Override

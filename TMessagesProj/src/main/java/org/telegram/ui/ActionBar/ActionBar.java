@@ -63,6 +63,7 @@ import org.telegram.ui.Components.SnowflakesEffect;
 
 import java.util.ArrayList;
 
+import art.clovi.CloviConfig;
 import art.clovi.ui.MD3ListAdapter;
 
 public class ActionBar extends FrameLayout {
@@ -322,7 +323,7 @@ public class ActionBar extends FrameLayout {
                     }
                 }
 
-                if (Theme.canStartHolidayAnimation()) {
+                if (Theme.canStartHolidayAnimation() || CloviConfig.showSnowOnChats) {
                     if (snowflakesEffect == null) {
                         snowflakesEffect = new SnowflakesEffect(0);
                     }

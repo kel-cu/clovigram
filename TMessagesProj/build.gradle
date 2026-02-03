@@ -69,6 +69,8 @@ dependencies {
     }
     implementation 'com.google.android.recaptcha:recaptcha:18.4.0'
     implementation files('libs/KetchumSDK_Community_20250805.jar')
+    implementation 'com.yandex.android:maps.mobile:4.30.0-lite'
+
 
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
 }
@@ -102,7 +104,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 35
 
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
@@ -132,6 +134,7 @@ android {
             buildConfigField "boolean", "DEBUG_PRIVATE_VERSION", "true"
             buildConfigField "boolean", "BUILD_HOST_IS_WINDOWS", isWindows
             buildConfigField "int", "VERSION_NUM", "0"
+            buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
         }
 
         HA_private {
@@ -147,6 +150,7 @@ android {
             buildConfigField "boolean", "DEBUG_PRIVATE_VERSION", "true"
             buildConfigField "boolean", "BUILD_HOST_IS_WINDOWS", isWindows
             buildConfigField "int", "VERSION_NUM", "1"
+            buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
         }
 
         HA_public {
@@ -162,6 +166,7 @@ android {
             buildConfigField "boolean", "DEBUG_PRIVATE_VERSION", "false"
             buildConfigField "boolean", "BUILD_HOST_IS_WINDOWS", isWindows
             buildConfigField "int", "VERSION_NUM", "4"
+            buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
         }
 
         HA_hardcore {
@@ -177,6 +182,7 @@ android {
             buildConfigField "boolean", "DEBUG_PRIVATE_VERSION", "true"
             buildConfigField "boolean", "BUILD_HOST_IS_WINDOWS", isWindows
             buildConfigField "int", "VERSION_NUM", "5"
+            buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
         }
 
         standalone {
@@ -192,6 +198,7 @@ android {
             buildConfigField "boolean", "DEBUG_PRIVATE_VERSION", "false"
             buildConfigField "boolean", "BUILD_HOST_IS_WINDOWS", isWindows
             buildConfigField "int", "VERSION_NUM", "6"
+            buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
         }
 
         release {
@@ -208,6 +215,7 @@ android {
             buildConfigField "boolean", "DEBUG_PRIVATE_VERSION", "false"
             buildConfigField "boolean", "BUILD_HOST_IS_WINDOWS", isWindows
             buildConfigField "int", "VERSION_NUM", "7"
+            buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
         }
     }
 
@@ -215,6 +223,15 @@ android {
 //    namespace 'art.clovi.messenger'
 }
 
+ext {
+    mapkitApiKey = getMapkitApiKey()
+}
+
+private String getMapkitApiKey() {
+    def properties = new Properties()
+    rootProject.file("local.properties").withInputStream { properties.load(it) }
+    return properties.getProperty("MAPKIT_API_KEY", "")
+}
 
 def getProps(String propName) {
     def propsFile = rootProject.file('local.properties')

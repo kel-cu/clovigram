@@ -1,10 +1,14 @@
 package org.telegram.ui.Components.blur3.drawable.color;
 
+import static art.clovi.ui.MD3ListAdapter.config;
+
 import androidx.core.graphics.ColorUtils;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.LiteMode;
 import org.telegram.ui.ActionBar.Theme;
+
+import art.clovi.ui.MD3ListAdapter;
 
 public class BlurredBackgroundColorProviderThemed implements BlurredBackgroundColorProvider {
 
@@ -50,6 +54,13 @@ public class BlurredBackgroundColorProviderThemed implements BlurredBackgroundCo
 
     @Override
     public int getBackgroundColor() {
+        if(MD3ListAdapter.shouldUseCustomColors()) {
+            if (config.resourcesProvider == null) {
+                return ColorUtils.blendARGB(Theme.getColor(Theme.key_actionBarDefaultSubmenuItemIcon), Theme.getColor(Theme.key_dialogBackground), 0.9f);
+            } else {
+                return Theme.getColor(Theme.key_windowBackgroundWhite, config.resourcesProvider);
+            }
+        }
         return backgroundColor;
     }
 

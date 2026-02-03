@@ -229,6 +229,7 @@ import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
 import art.clovi.CloviConfig;
+import art.clovi.maps.YandexMapsProvider;
 import art.clovi.util.FontHelper;
 import me.vkryl.core.BitwiseUtils;
 
@@ -1718,6 +1719,7 @@ public class AndroidUtilities {
     }
 
     public static boolean isMapsInstalled(BaseFragment fragment) {
+        if(ApplicationLoader.getMapsProvider() instanceof YandexMapsProvider) return true;
         String pkg = ApplicationLoader.getMapsProvider().getMapsAppPackageName();
         try {
             ApplicationLoader.applicationContext.getPackageManager().getApplicationInfo(pkg, 0);

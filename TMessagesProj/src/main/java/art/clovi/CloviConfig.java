@@ -37,6 +37,7 @@ public class CloviConfig {
     public static boolean addPostStatsButton;
     public static boolean usePremiumBackgroundOnDrawer;
     public static boolean showSnowOnProfile;
+    public static boolean showSnowOnChats;
     // Camera
     public static boolean startWithBackCamera;
     // Nothing Glyphs
@@ -79,6 +80,7 @@ public class CloviConfig {
             addPostStatsButton = preferences.getBoolean("addPostStatsButton", true);
             usePremiumBackgroundOnDrawer = preferences.getBoolean("usePremiumBackgroundOnDrawer", true);
             showSnowOnProfile = preferences.getBoolean("showSnowOnProfile", false);
+            showSnowOnChats = preferences.getBoolean("showSnowOnChats", false);
             hideVoiceAndRounds = preferences.getBoolean("hideVoiceAndRounds", false);
 
             // Nothing Glyphs
@@ -95,43 +97,28 @@ public class CloviConfig {
     }
 
     public static boolean getValue(int FLAG){
-        if(FLAG == 0){
-            return hidePhoneNumber;
-        } else if(FLAG == 1){
-            return replaceAppName;
-        } else if(FLAG == 2){
-            return useYandexMaps;
-        } else if(FLAG == 3){
-            return startWithBackCamera;
-        } else if(FLAG == 4){
-            return enableGlyphs;
-        } else if(FLAG == 5){
-            return allowShowProgressGlyph;
-        } else if(FLAG == 6){
-            return allowShowRecordGlyph;
-        } else if(FLAG == 7){
-            return hideStories;
-        } else if(FLAG == 8){
-            return disableTabletMode;
-        } else if(FLAG == 9){
-            return isMd3ContainersEnabled;
-        } else if(FLAG == 10){
-            return hideDeveloperSite;
-        } else if(FLAG == 11){
-            return useSystemFont;
-        } else if(FLAG == 12){
-            return useSystemEmoji;
-        } else if(FLAG == 13){
-            return disableDoubleTapReaction;
-        } else if(FLAG == 14){
-            return showProfileButton;
-        } else if(FLAG == 15){
-            return isMd3ComponentsEnabled;
-        } else if(FLAG == 16) return replaceEditedToPen;
+        if(FLAG == 0) return hidePhoneNumber;
+        else if(FLAG == 1) return replaceAppName;
+        else if(FLAG == 2) return useYandexMaps;
+        else if(FLAG == 3) return startWithBackCamera;
+        else if(FLAG == 4) return enableGlyphs;
+        else if(FLAG == 5) return allowShowProgressGlyph;
+        else if(FLAG == 6) return allowShowRecordGlyph;
+        else if(FLAG == 7) return hideStories;
+        else if(FLAG == 8) return disableTabletMode;
+        else if(FLAG == 9) return isMd3ContainersEnabled;
+        else if(FLAG == 10) return hideDeveloperSite;
+        else if(FLAG == 11) return useSystemFont;
+        else if(FLAG == 12) return useSystemEmoji;
+        else if(FLAG == 13) return disableDoubleTapReaction;
+        else if(FLAG == 14) return showProfileButton;
+        else if(FLAG == 15) return isMd3ComponentsEnabled;
+        else if(FLAG == 16) return replaceEditedToPen;
         else if(FLAG == 17) return addPostStatsButton;
         else if(FLAG == 18) return usePremiumBackgroundOnDrawer;
         else if(FLAG == 19) return showSnowOnProfile;
-        else return hideVoiceAndRounds;
+        else if(FLAG == 20) return hideVoiceAndRounds;
+        else return showSnowOnChats;
     }
     public static void setValue(int FLAG){
         if(FLAG == 0){
@@ -197,6 +184,9 @@ public class CloviConfig {
         } else if(FLAG == 20){
             CloviConfig.hideVoiceAndRounds = !CloviConfig.hideVoiceAndRounds;
             CloviConfig.editor.putBoolean("hideVoiceAndRounds", hideVoiceAndRounds);
+        } else if(FLAG == 21){
+            CloviConfig.showSnowOnChats = !CloviConfig.showSnowOnChats;
+            CloviConfig.editor.putBoolean("showSnowOnChats", showSnowOnChats);
         }
         CloviConfig.editor.apply();
     }

@@ -1174,4 +1174,6 @@
     <string name="NothingGlyph">Nothing Glyph</string>
     <string name="ShowSnowOnProfile">Enable snow in profile</string>
     <string name="UsePremiumBackgroundOnDrawer">Enable Premium Background in side menu</string>
+    <string name="ShowSnowOnChats">Enable snow in chats</string>
+    <string name="Snow">Snow</string>
 </resources>

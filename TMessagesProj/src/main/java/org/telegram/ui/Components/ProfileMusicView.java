@@ -68,14 +68,14 @@ public class ProfileMusicView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(
-            MeasureSpec.makeMeasureSpec(
-                MeasureSpec.getSize(widthMeasureSpec),
-                MeasureSpec.EXACTLY
-            ),
-            MeasureSpec.makeMeasureSpec(
-                dp(22),
-                MeasureSpec.EXACTLY
-            )
+                MeasureSpec.makeMeasureSpec(
+                        MeasureSpec.getSize(widthMeasureSpec),
+                        MeasureSpec.EXACTLY
+                ),
+                MeasureSpec.makeMeasureSpec(
+                        dp(22),
+                        MeasureSpec.EXACTLY
+                )
         );
     }
 
@@ -99,7 +99,7 @@ public class ProfileMusicView extends View {
             color2 = peerColor.getBgColor2(Theme.isCurrentThemeDark());
         }
         setBackgroundColor(
-            Theme.adaptHSV(ColorUtils.blendARGB(color1, color2, .25f), +.02f, -.08f)
+                Theme.adaptHSV(ColorUtils.blendARGB(color1, color2, .25f), +.02f, -.08f)
         );
     }
 

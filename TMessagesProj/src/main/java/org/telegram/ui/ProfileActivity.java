@@ -336,7 +336,6 @@ import java.util.zip.ZipOutputStream;
 
 import art.clovi.CloviConfig;
 import art.clovi.ui.FakeProfileHeaderEmpty;
-import art.clovi.ui.MD3AdapterWithDiffUtils;
 import art.clovi.ui.MD3ListAdapter;
 
 public class ProfileActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate, SharedMediaLayout.SharedMediaPreloaderDelegate, ImageUpdater.ImageUpdaterDelegate, SharedMediaLayout.Delegate {
@@ -11044,16 +11043,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
         if (actionsView != null) {
             actionsView.set(ProfileActionsView.KEY_JOIN, hasJoinRow);
-        }
-
-
-        if (listView != null) {
-            listView.post(() -> {
-                RecyclerView.Adapter adapter = listView.getAdapter();
-                if (adapter instanceof MD3ListAdapter md3) {
-                    md3.reapplyVisible();
-                }
-            });
         }
     }
 

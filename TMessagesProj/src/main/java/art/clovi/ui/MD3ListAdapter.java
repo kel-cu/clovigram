@@ -14,7 +14,6 @@ import android.graphics.Color;
 import android.graphics.Outline;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
@@ -276,9 +275,7 @@ public abstract class MD3ListAdapter extends RecyclerListView.SelectionAdapter {
         int selectorColor = Theme.getColor(Theme.key_listSelector, config.resourcesProvider);
         Drawable md3Selector = Theme.createRadSelectorDrawable(selectorColor, /*cornerRadius*/ 0, 0);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            holder.itemView.setForeground(md3Selector);
-        }
+        holder.itemView.setForeground(md3Selector);
         md3Selector.setCallback(holder.itemView);
 
         applyMd3Margins(holder.itemView, position, position == getItemCount() - 1, isNextItemBoundary, true);
@@ -416,11 +413,11 @@ public abstract class MD3ListAdapter extends RecyclerListView.SelectionAdapter {
     protected boolean isOctoPreferencesHeader(int viewType) {
         return checkRole(viewType, stickerCellViewTypes, ROLE_STICKER_CELL);
     }
-    
+
     protected static boolean mustIgnoreView(@NonNull View view) {
         return view instanceof ProfileMusicView;
     }
-    
+
     protected boolean mustIgnoreView(int viewType) {
         return checkRole(viewType, mustIgnoreViewTypes, ROLE_IGNORE);
     }
@@ -476,7 +473,7 @@ public abstract class MD3ListAdapter extends RecyclerListView.SelectionAdapter {
     }
 
     public static boolean shouldUseCustomColors() {
-        return false;//Theme.getActiveTheme().isMonetLight() || Theme.getActiveTheme().isMonetDark() || Theme.getCurrentTheme().isMonetAmoled() || Theme.getActiveTheme().isAmoled();
+        return Theme.getActiveTheme().isMonetLight() || Theme.getActiveTheme().isMonetDark() || Theme.getCurrentTheme().isMonetAmoled() || Theme.getActiveTheme().isAmoled();
     }
 
     private static void registerAdapterInstance(MD3ListAdapter adapter) {
