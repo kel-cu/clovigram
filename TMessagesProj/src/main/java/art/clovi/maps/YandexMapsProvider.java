@@ -7,10 +7,14 @@ import android.view.View;
 import androidx.core.util.Consumer;
 
 import com.yandex.mapkit.MapKitFactory;
+import com.yandex.mapkit.geometry.Circle;
 import com.yandex.mapkit.mapview.MapView;
 
 import org.telegram.messenger.IMapsProvider;
 import org.telegram.messenger.R;
+
+import java.util.List;
+import java.util.Map;
 
 public class YandexMapsProvider implements IMapsProvider {
     @Override
@@ -127,6 +131,61 @@ public class YandexMapsProvider implements IMapsProvider {
         @Override
         public void setOnLayoutListener(Runnable callback) {
             onLayoutListener = callback;
+        }
+    }
+
+    public final static class YandexCircleOptions implements ICircleOptions {
+        Circle circle = new Circle();
+
+        @Override
+        public ICircleOptions center(LatLng latLng) {
+
+            return this;
+        }
+
+        @Override
+        public ICircleOptions radius(double radius) {
+            return this;
+        }
+
+        @Override
+        public ICircleOptions strokeColor(int color) {
+            return this;
+        }
+
+        @Override
+        public ICircleOptions fillColor(int color) {
+            return this;
+        }
+
+        @Override
+        public ICircleOptions strokePattern(List<PatternItem> patternItems) {
+            return this;
+        }
+
+        @Override
+        public ICircleOptions strokeWidth(int width) {
+            return this;
+        }
+    }
+    public final static class YandexMapsUISettings implements IUISettings {
+        MapView mapView;
+        private YandexMapsUISettings(MapView mapView){
+            this.mapView = mapView;
+        }
+
+        @Override
+        public void setZoomControlsEnabled(boolean enabled) {
+            mapView.getMap().setZoomGesturesEnabled(enabled);
+        }
+
+        @Override
+        public void setMyLocationButtonEnabled(boolean enabled) {
+
+        }
+
+        @Override
+        public void setCompassEnabled(boolean enabled) {
         }
     }
 }
